@@ -1,8 +1,6 @@
 #include <ksys.h>
 #include <string.h>
 
-#define NULL (void*)0
-
 coff_export_table* _ksys_cofflib_load(const char* path)
 {
     asm_inline(
