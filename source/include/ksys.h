@@ -21,6 +21,9 @@ int   _ksys_free(void *mem);
 void* _ksys_realloc(void *mem, size_t size);
 int*  _ksys_unmap(void *base, size_t offset, size_t size);
 
+unsigned _ksys_get_clock();
+unsigned _ksys_get_date();
+
 // End the program
 void _ksys_exit();
 
