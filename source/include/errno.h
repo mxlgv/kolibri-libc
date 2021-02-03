@@ -1,6 +1,8 @@
 #ifndef _ERRNO_H
 #define _ERRNO_H
 
+extern int errno;
+
 /* socket error codes*/
 #define ENOBUFS      1
 #define EINPROGRESS  2
