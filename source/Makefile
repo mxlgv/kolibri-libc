@@ -26,3 +26,7 @@ clean:
 	$(doClean) 
 	rm -f $(LIBNAME)
 
+test:
+	make -C ../test
+	kex ../test/test
+	
