@@ -46,36 +46,36 @@ start:
     call push_param
 ; retrieving parameters
     mov  esi, params
-    xor  edx, edx  ; dl - идёт параметр(1) или разделители(0)
-		   ; dh - символ с которого начался параметр (1 кавычки, 0 остальное)
+    xor  edx, edx  ; dl - goes parameter(1) or delimiters(0)
+		   ; dh - characher the parameter started with (1 quotes, 0 other)
     mov  ecx, 1    ; cl = 1
-		   ; ch = 0  просто ноль
+		   ; ch = 0  simply zero
 .parse: 
     lodsb
     test al, al
     jz	 .run
     test dl, dl
     jnz  .findendparam
-		     ;{если был разделитель
+		     ;{if was a delimiter
     cmp  al, ' '
-    jz	 .parse  ;загружен пробел, грузим следующий символ
-    mov  dl, cl  ;начинается параметр
+    jz	 .parse  ;whitespace loaded, now load next characher
+    mov  dl, cl  ;now parameter starting
     cmp  al, '"'
-    jz	 @f	 ;загружены кавычки
-    mov  dh, ch     ;параметр без кавычек
+    jz	 @f	 ;quotes loaded
+    mov  dh, ch     ;parameter without quotes
     dec  esi
     call push_param
     inc  esi
     jmp  .parse
 
   @@:  
-    mov  dh, cl     ;параметр в кавычеках
-    call push_param ;если не пробел значит начинается какой то параметр
-    jmp  .parse     ;если был разделитель}
+    mov  dh, cl     ;parameter in quotes
+    call push_param ;if not whitespace, so it means that some parameter is starting
+    jmp  .parse     ;if was a delimiter}
 
 .findendparam:
     test dh, dh
-    jz	 @f ; без кавычек
+    jz	 @f ; without quotes
     cmp  al, '"'
     jz	 .clear
     jmp  .parse
