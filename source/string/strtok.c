@@ -4,61 +4,27 @@
    Permission is granted to use, modify, and / or redistribute at will.
 */
 
-#ifndef REGTEST
-#define __STDC_WANT_LIB_EXT1__ 1
-#endif
-
 #include <string.h>
 
-#ifndef REGTEST
-
-char * strtok( char * s1, const char * s2 )
+char* strtok(char* s, const char* delim)
 {
-    static char * tmp = NULL;
-    static size_t max;
+    static char* savep;
+    char* res;
 
-    if ( s1 != NULL )
-    {
-        /* new string */
-        tmp = s1;
-        max = strlen( tmp );
-    }
+    if(s)
+        savep = NULL;
+    else
+        s = savep;
 
-    return _PDCLIB_strtok( s1, &max, s2, &tmp );
+    if (*s == '\0')
+        return NULL;
+	s += strspn(s, delim);
+	if (*s == '\0')
+		return NULL;
+	res = s;
+	s += strcspn(s, delim);
+	savep = s + 1;
+	*s = '\0';
+	return res;
 }
 
-#endif
-
-#ifdef TEST
-
-#include "_PDCLIB_test.h"
-
-int main( void )
-{
-    char s[] = "_a_bc__d_";
-    TESTCASE( strtok( s, "_" ) == &s[1] );
-    TESTCASE( s[1] == 'a' );
-    TESTCASE( s[2] == '\0' );
-    TESTCASE( strtok( NULL, "_" ) == &s[3] );
-    TESTCASE( s[3] == 'b' );
-    TESTCASE( s[4] == 'c' );
-    TESTCASE( s[5] == '\0' );
-    TESTCASE( strtok( NULL, "_" ) == &s[7] );
-    TESTCASE( s[6] == '_' );
-    TESTCASE( s[7] == 'd' );
-    TESTCASE( s[8] == '\0' );
-    TESTCASE( strtok( NULL, "_" ) == NULL );
-    strcpy( s, "ab_cd" );
-    TESTCASE( strtok( s, "_" ) == &s[0] );
-    TESTCASE( s[0] == 'a' );
-    TESTCASE( s[1] == 'b' );
-    TESTCASE( s[2] == '\0' );
-    TESTCASE( strtok( NULL, "_" ) == &s[3] );
-    TESTCASE( s[3] == 'c' );
-    TESTCASE( s[4] == 'd' );
-    TESTCASE( s[5] == '\0' );
-    TESTCASE( strtok( NULL, "_" ) == NULL );
-    return TEST_RESULTS;
-}
-
-#endif
