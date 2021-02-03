@@ -1,19 +1,55 @@
+/* memmove( void *, const void *, size_t )
+
+   This file is part of the Public Domain C Library (PDCLib).
+   Permission is granted to use, modify, and / or redistribute at will.
+*/
+
 #include <string.h>
 
-void *memmove(void *dest, const void *source, size_t count) {
-    char *dst = dst_void;
-    const char *src = src_void;
-    if (src < dst && dst < src + length) {
-        /* Have to copy backwards */
-        src += length;
-        dst += length;
-        while (length--) {
-              *--dst = *--src;
-        }
-    } else {
-        while (length--) {
-            *dst++ = *src++;
+#ifndef REGTEST
+
+void * memmove( void * s1, const void * s2, size_t n )
+{
+    char * dest = ( char * ) s1;
+    const char * src = ( const char * ) s2;
+
+    if ( dest <= src )
+    {
+        while ( n-- )
+        {
+            *dest++ = *src++;
         }
     }
-    return dst_void;
+    else
+    {
+        src += n;
+        dest += n;
+
+        while ( n-- )
+        {
+            *--dest = *--src;
+        }
+    }
+
+    return s1;
 }
+
+#endif
+
+#ifdef TEST
+
+#include "_PDCLIB_test.h"
+
+int main( void )
+{
+    char s[] = "xxxxabcde";
+    TESTCASE( memmove( s, s + 4, 5 ) == s );
+    TESTCASE( s[0] == 'a' );
+    TESTCASE( s[4] == 'e' );
+    TESTCASE( s[5] == 'b' );
+    TESTCASE( memmove( s + 4, s, 5 ) == s + 4 );
+    TESTCASE( s[4] == 'a' );
+    return TEST_RESULTS;
+}
+
+#endif
