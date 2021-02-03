@@ -20,4 +20,6 @@ void *calloc(size_t num, size_t size);
 void *realloc(void *ptr, size_t newsize);
 void free(void *ptr);
 
+int atoi(char *s);
+
 #endif
