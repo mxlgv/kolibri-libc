@@ -1,6 +1,6 @@
 NAME=test
 
-KTCC= ../tools/kos32-tcc
+KTCC= ../bin/kos32-tcc
 KPACK= kpack
 
 SRC=test.c
