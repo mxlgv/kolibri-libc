@@ -1,9 +1,9 @@
 INCLUDE = include
 
-LIBNAME = ../tools/lib/libc.a
-CC = ../tools/kos32-tcc
+LIBNAME = ../bin/lib/libc.a
+CC = ../bin/kos32-tcc
 CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC
-DIRS :=  ksys string
+DIRS :=  ksys string stdlib
 
 cfiles := $(foreach dir,$(DIRS),$(patsubst %.c, %.o, $(wildcard $(dir)/*.c)))
 asmfiles := $(foreach dir,$(DIRS),$(patsubst %.asm, %.o, $(wildcard $(dir)/*.asm)))
