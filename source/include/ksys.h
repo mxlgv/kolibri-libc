@@ -24,6 +24,9 @@ int*  _ksys_unmap(void *base, size_t offset, size_t size);
 unsigned _ksys_get_clock();
 unsigned _ksys_get_date();
 
+void _ksys_debug_putc(char c);
+void _ksys_debug_puts(char *s);
+
 // End the program
 void _ksys_exit();
 
