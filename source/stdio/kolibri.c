@@ -7,9 +7,10 @@
 void kolibri_init_stdio() {
 	coff_export_table *conlib  = _ksys_cofflib_load("/sys/lib/console.obj");
 	con_init = _ksys_cofflib_getproc(conlib, "con_init");
-	con_printf = _ksys_cofflib_getproc(conlib, "con_printf");
-	con_gets = _ksys_cofflib_getproc(conlib, "con_gets");
-	con_write_asciiz = _ksys_cofflib_getproc(conlib, "con_write_asciiz");
+	
+	printf = _ksys_cofflib_getproc(conlib, "con_printf");
+	gets = _ksys_cofflib_getproc(conlib, "con_gets");
+	puts = _ksys_cofflib_getproc(conlib, "con_write_asciiz");
 	
 	con_init(-1, -1, -1, -1, "Console application");
 }
