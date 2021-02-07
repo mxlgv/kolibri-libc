@@ -548,7 +548,7 @@
 | :x:                | [_mbsrtowcs_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/mbsrtowcs.html) |
 | :x:                | [_mbstowcs_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/mbstowcs.html) |
 | :x:                | [_mbtowc_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/mbtowc.html) |
-| :x:                | [_memccpy_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/memccpy.html) |
+| :heavy_check_mark: | [_memccpy_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/memccpy.html) |
 | :heavy_check_mark: | [_memchr_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/memchr.html) |
 | :heavy_check_mark: | [_memcmp_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/memcmp.html) |
 | :heavy_check_mark: | [_memcpy_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/memcpy.html) |
