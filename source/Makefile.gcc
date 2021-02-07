@@ -25,8 +25,7 @@ $(asmfiles):
 	fasm $*.asm $*.o
 
 clean:
-	$(doClean) 
-	rm -f $(LIBNAME)
+	$(doClean)
 
 test:
 	make -C ../test

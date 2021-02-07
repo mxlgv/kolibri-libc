@@ -11,4 +11,4 @@ all:
 	$(KPACK) $(NAME)
 
 clean:
-	rm $(NAME)
+	rm $(NAME).o
