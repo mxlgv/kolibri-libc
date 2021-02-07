@@ -11,6 +11,7 @@ LDFLAGS = -m elf_i386 -T static.lds -nostdlib -L ../bin/lib
 all:
 	$(CC) $(CFLAGS) $(NAME).c
 	$(LD) $(LDFLAGS) $(NAME).o -o $(NAME) -lc
+	strip -s $(NAME) -o $(NAME)
 	objcopy $(NAME) -O binary
 	$(KPACK) $(NAME) 
 
