@@ -28,6 +28,6 @@ clean:
 	$(doClean)
 
 test:
-	make -C ../test
+	make -C ../test -f Makefile.tcc
 	kex ../test/test
 	
