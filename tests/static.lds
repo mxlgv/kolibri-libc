@@ -13,7 +13,7 @@ SECTIONS
         LONG(___memsize);
         LONG(___stacktop);
         LONG(__argv);
-        LONG(0);     /*  full path    */
+        LONG(__path);         /*  full path    */
         LONG(0);              /*FIXME tls data */
 
         *(.init)
