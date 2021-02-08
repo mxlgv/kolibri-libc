@@ -12,7 +12,7 @@
 | :x:                | [__toupper_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/_toupper.html) |
 | :x:                | [_a64l_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/a64l.html) |
 | :x:                | [_abort_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/abort.html) |
-| :x:                | [_abs_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/abs.html) |
+| :heavy_check_mark: | [_abs_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/abs.html) |
 | :x:                | [_accept_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/accept.html) |
 | :x:                | [_access_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/access.html) |
 | :x:                | [_acosf_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/acosf.html) |
@@ -51,8 +51,8 @@
 | :x:                | [_atexit_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atexit.html) |
 | :x:                | [_atof_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atof.html) |
 | :heavy_check_mark: | [_atoi_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atoi.html) |
-| :x:                | [_atol_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atol.html) |
-| :x:                | [_atoll_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atoll.html) |
+| :heavy_check_mark: | [_atol_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atol.html) |
+| :heavy_check_mark: | [_atoll_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atoll.html) |
 | :x:                | [_basename_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/basename.html) |
 | :x:                | [_bind_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/bind.html) |
 | :x:                | [_bsearch_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/bsearch.html) |
@@ -179,7 +179,7 @@
 | :x:                | [_difftime_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/difftime.html) |
 | :x:                | [_dirfd_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/dirfd.html) |
 | :x:                | [_dirname_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/dirname.html) |
-| :x:                | [_div_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/div.html) |
+| :heavy_check_mark: | [_div_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/div.html) |
 | :x:                | [_dlclose_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlclose.html) |
 | :x:                | [_dlerror_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlerror.html) |
 | :x:                | [_dlopen_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlopen.html) |
@@ -492,7 +492,7 @@
 | :x:                | [_ldexpf_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/ldexpf.html) |
 | :x:                | [_ldexp_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/ldexp.html) |
 | :x:                | [_ldexpl_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/ldexpl.html) |
-| :x:                | [_ldiv_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/ldiv.html) |
+| :heavy_check_mark: | [_ldiv_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/ldiv.html) |
 | :x:                | [_lfind_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lfind.html) |
 | :x:                | [_lgammaf_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lgammaf.html) |
 | :x:                | [_lgamma_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lgamma.html) |
@@ -501,8 +501,8 @@
 | :x:                | [_link_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/link.html) |
 | :x:                | [_lio_listio_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lio_listio.html) |
 | :x:                | [_listen_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/listen.html) |
-| :x:                | [_llabs_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/llabs.html) |
-| :x:                | [_lldiv_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lldiv.html) |
+| :heavy_check_mark: | [_llabs_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/llabs.html) |
+| :heavy_check_mark: | [_lldiv_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lldiv.html) |
 | :x:                | [_llrintf_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/llrintf.html) |
 | :x:                | [_llrint_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/llrint.html) |
 | :x:                | [_llrintl_()](https://pubs.opengroup.org/onlinepubs/9699919799/functions/llrintl.html) |
