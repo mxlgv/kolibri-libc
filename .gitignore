@@ -1,0 +1,8 @@
+*.swp
+lib
+lib/*
+source/stdlib/*.o
+source/string/*.o
+tests/*.o
+tests/argtest
+
