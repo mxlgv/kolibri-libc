@@ -6,7 +6,8 @@ extern "C" {
 #endif
 
 #include <stddef.h>
-
+#include <string.h>
+    
 #define asm_inline __asm__ __volatile__
 
 typedef struct {
@@ -645,7 +646,7 @@ void _ksys_debug_puts(char *s)
 static inline
 int _ksys_start_thread(void* proc, char* stack_top)
 {
-    register int val;
+    int val;
     asm_inline(
         "int $0x40"
         :"=a"(val)
@@ -713,7 +714,7 @@ ufile_t _ksys_load_file(const char *path)
 }
 
 static inline
-int ksys_work_files(ksys70_struct *k)
+int _ksys_work_files(ksys70_struct *k)
 {
     int status;
     asm_inline(
