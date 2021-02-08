@@ -1,10 +1,22 @@
-#include <stdio.h>
+#include <ksys.h>
 
-int main() {
-       kolibri_init_stdio();
-       char name[250];
-       gets(name, 250);
-       puts("Your name is ");
-       puts(name);
-       printf("\n---\nSmall libc, written in %d!", 2021);
-}
+#define cdecl   __attribute__ ((cdecl))
+#define stdcall __attribute__ ((stdcall))
+ 
+void stdcall (*con_init)(int wnd_width, int  wnd_height, int scr_width, int scr_height, const char* title);
+void stdcall (*con_write_asciiz)(const char* str);
+
+int main(int argc, char** argv){
+    coff_export_table *conlib  = _ksys_cofflib_load("/sys/lib/console.obj");
+    con_init   =      _ksys_cofflib_getproc(conlib, "con_init");
+    con_write_asciiz = _ksys_cofflib_getproc(conlib, "con_write_asciiz");
+    
+    con_init(-1, -1, -1, -1, "test");
+    con_write_asciiz("Hello!\n");
+    if(argc>1){
+        con_write_asciiz("argv[1]=");
+        con_write_asciiz(argv[1]);
+    }else{
+        con_write_asciiz("No arguments found!");
+    }
+ }
