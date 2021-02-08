@@ -172,8 +172,10 @@ void* memset(void* s, int c, size_t n);
 */
 char * strerror(int errnum);
 
-/* Returns the length of the string s (excluding terminating '\0').
-*/
+/* Returns the length of the string s (excluding terminating '\0').*/
 size_t strlen(const char * s);
+
+/* The function reverses the sequence of characters in the string pointed to by str. */
+char* strrev(char *str);
 
 #endif
