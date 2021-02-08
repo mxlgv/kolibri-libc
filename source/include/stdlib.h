@@ -16,6 +16,8 @@ int atoi (const char *);
 long atol (const char *);
 long long atoll (const char *);
 
+char* itoa(int);
+
 int abs (int);
 long labs (long);
 long long llabs (long long);
