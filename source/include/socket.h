@@ -1,7 +1,8 @@
-#ifndef __SOCKET_H
-#define __SOCKET_H
+#ifndef _SOCKET_H_
+#define _SOCKET_H_
 
 #include <stddef.h>
+#include <ksys.h>
 #include <errno.h>
 
 // Socket Types
@@ -22,7 +23,7 @@
 // Address families
 #define AF_UNSPEC 0
 #define AF_LOCAL 1
-#define AF_INET  2 
+#define AF_INET  2     // Default INET=IPv4
 #define AF_INET4 2     // IPv4
 #define AF_INET6 10    // IPv6
 
@@ -54,7 +55,9 @@
 //Socket options
 #define SO_BINDTODEVICE (1<<9)
 #define SO_NONBLOCK (1<<31)
+
 #define PORT(X) (X<<8)
+#define err_code errno
 
 #pragma pack(push,1)
 struct sockaddr{
@@ -74,16 +77,134 @@ typedef struct{
 }optstruct;
 #pragma pack(pop)
 
-int socket(int domain, int type, int protocol);
-int close(int socket);
-int bind(int socket, const struct sockaddr *addres, int addres_len);
-int listen(int socket, int backlog);
-int connect(int socket, const struct sockaddr* address, int socket_len);
-int accept(int socket, const struct sockaddr* address, int address_len);
-int send(int socket, const void *message, size_t msg_len, int flag);
-int recv(int socket, void *buffer, size_t buff_len, int flag);
-int setsockopt(int socket,const optstruct* opt);
-int getsockopt(int socket, optstruct* opt);
-int socketpair(int *sock1, int *sock2);
+static inline 
+int socket(int domain, int type, int protocol)
+{
+    int socket;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(socket)
+        :"a"(75), "b"(0), "c"(domain), "d"(type), "S"(protocol)
+    );
+    return socket;
+}
 
-#endif
+static inline 
+int close(int socket)
+{
+    int status;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(1), "c"(socket)
+    );
+    return status;
+}
+
+static inline 
+int bind(int socket, const struct sockaddr *addres, int addres_len)
+{
+    int status;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(2), "c"(socket), "d"(addres), "S"(addres_len)
+    );
+    return status;
+}
+
+static inline 
+int listen(int socket, int backlog)
+{
+    int status;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(3), "c"(socket), "d"(backlog)
+    );
+    return status;
+}
+
+static inline 
+int connect(int socket, const struct sockaddr* address, int socket_len)
+{
+    int status;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(4), "c"(socket), "d"(address), "S"(socket_len)
+    );
+    return status;
+}
+
+static inline int 
+accept(int socket, const struct sockaddr *address, int address_len)
+{
+    int new_socket;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(new_socket)
+        :"a"(75), "b"(5), "c"(socket), "d"(address), "S"(address_len)
+    );
+    return new_socket;
+}
+
+static inline 
+int send(int socket, const void *message, size_t msg_len, int flag)
+{
+    int status;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(6), "c"(socket), "d"(message), "S"(msg_len), "D"(flag)
+    );
+    return status;
+}
+
+static inline 
+int recv(int socket, void *buffer, size_t buff_len, int flag)
+{
+    int status;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(7), "c"(socket), "d"(buffer), "S"(buff_len), "D"(flag)
+    );
+    return status;
+}
+
+static inline 
+int setsockopt(int socket,const optstruct* opt)
+{
+    int status;
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(8), "c"(socket),"d"(opt)
+    );
+    return status;
+}
+
+static inline int getsockopt(int socket, optstruct* opt)
+{
+    int status; 
+    asm_inline(
+        "int $0x40"
+        :"=b"(err_code), "=a"(status)
+        :"a"(75), "b"(9), "c"(socket),"d"(opt)
+    );
+    return status;
+}
+
+static inline int socketpair(int *socket1, int *socket2)
+{
+   asm_inline(
+        "int $0x40"
+        :"=b"(*socket2), "=a"(*socket1)
+        :"a"(75), "b"(10)
+    ); 
+    err_code=*socket2;
+    return *socket1;
+}
+
+#endif //_SOCKET_H_
