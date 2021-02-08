@@ -26,6 +26,7 @@ $(asmfiles):
 
 clean:
 	$(doClean)
+	rm -f $(LIBNAME)
 
 test:
 	make -C ../test -f Makefile.tcc
