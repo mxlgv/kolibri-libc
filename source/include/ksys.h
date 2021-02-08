@@ -7,7 +7,7 @@ extern "C" {
 
 #include <stddef.h>
 #include <string.h>
-    
+
 #define asm_inline __asm__ __volatile__
 
 typedef struct {
@@ -24,9 +24,7 @@ typedef union{
         short  y;
     };
 } pos_t;
-#pragma pack(pop)
- 
-#pragma pack(push,1)
+
 typedef union oskey_t{
     unsigned val;
     struct{
@@ -35,7 +33,6 @@ typedef union oskey_t{
         unsigned char ctrl_key;
     };
 } oskey_t;
-#pragma pack(pop)
 
 typedef struct{
   unsigned     handle;
@@ -46,7 +43,6 @@ typedef struct{
   int          out_size;
 }ioctl_t;
  
-#pragma pack(push,1)
 typedef union{
     struct{
         void   *data;
@@ -54,10 +50,8 @@ typedef union{
     } x;
     unsigned long long raw;
 }ufile_t;
-#pragma pack(pop)
 
-#pragma pack(push,1)
-typedef struct {
+typedef struct{
     unsigned            p00;
     unsigned long long  p04;
     unsigned            p12;
@@ -65,9 +59,7 @@ typedef struct {
     char                p20;
     char               *p21;
 } ksys70_struct;
-#pragma pack(pop)
 
-#pragma pack(push,1)
 struct ksys_process_table{
   int cpu_usage;             //+0
   int window_pos_info;       //+4
@@ -89,7 +81,6 @@ struct ksys_process_table{
   unsigned char window_state;//+70
   char reserved3[1024-71];   //+71
 };
-#pragma pack(pop) 
 
 typedef unsigned int color_t;
 
@@ -122,6 +113,8 @@ typedef struct {
     char* func_name;
     void* func_ptr;
 }coff_export_table;
+
+#pragma pack(pop)
 
 enum KSYS_EVENTS {
     KSYS_EVENT_NONE = 0,     /* Event queue is empty */
@@ -714,7 +707,7 @@ ufile_t _ksys_load_file(const char *path)
 }
 
 static inline
-int _ksys_work_files(ksys70_struct *k)
+int  __attribute__((optimize("O0"))) _ksys_work_files(ksys70_struct *k)
 {
     int status;
     asm_inline(
