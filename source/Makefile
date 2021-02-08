@@ -1,8 +1,9 @@
-INCLUDE = include
+CC = ../bin/kos32-tcc
 
+INCLUDE = include
 LIB_DIR = ../bin/lib
 LIBNAME = $(LIB_DIR)/libc.a
-CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC -Os
+CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC
 DIRS :=  string stdlib stdio
 
 cfiles := $(foreach dir,$(DIRS),$(patsubst %.c, %.o, $(wildcard $(dir)/*.c)))
