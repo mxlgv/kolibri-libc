@@ -85,12 +85,12 @@ void _conv_socket_err(){
         case 11: errno = EINVAL; break;
         case 12: errno = EMSGSIZE; break;
         case 18: errno = ENOMEM; break;
-        case 20: errno = EADDRINUSE; break
+        case 20: errno = EADDRINUSE; break;
         case 61: errno = ECONNREFUSED; break;
         case 52: errno = ECONNRESET; break;
         case 56: errno = EISCONN; break;
-        case 60: errno = ETIMEDOUT; break
-        case 54: errno = ECONNABORTED; break
+        case 60: errno = ETIMEDOUT; break;
+        case 54: errno = ECONNABORTED; break;
         default: errno = 0; break;
     }
 }
