@@ -1,4 +1,4 @@
-NAME = argtest
+NAME = mathtest
 
 CC = gcc
 LD = ld
@@ -14,7 +14,7 @@ all: $(NAME)
 
 $(NAME): $(SRC)
 	$(CC) $(CFLAGS) $(SRC)
-	$(LD) $(LDFLAGS) $(NAME).o -o $(NAME) -lc
+	$(LD) $(LDFLAGS) $(NAME).o -o $(NAME) -lc -lm
 	strip -s $(NAME) -o $(NAME)
 	objcopy $(NAME) -O binary
 	$(KPACK) $(NAME) 
