@@ -9,6 +9,7 @@ extern "C" {
 #include <string.h>
 
 #define asm_inline __asm__ __volatile__
+#define not_optimized __attribute__((optimize("O0")))
 
 typedef struct {
     unsigned char blue;
@@ -589,7 +590,7 @@ int* _ksys_unmap(void *base, size_t offset, size_t size)
 /* Loading the dynamic coff library */
 
 static inline
-coff_export_table* _ksys_cofflib_load(const char* path)
+coff_export_table* not_optimized _ksys_cofflib_load(const char* path)
 {
     asm_inline(
         "int $0x40"
@@ -598,7 +599,7 @@ coff_export_table* _ksys_cofflib_load(const char* path)
 }
 
 static inline
-void* _ksys_cofflib_getproc(coff_export_table *table, const char* fun_name)
+void* not_optimized _ksys_cofflib_getproc(coff_export_table *table, const char* fun_name)
 {
     unsigned i=0;
     while (1){
@@ -707,7 +708,7 @@ ufile_t _ksys_load_file(const char *path)
 }
 
 static inline
-int  __attribute__((optimize("O0"))) _ksys_work_files(ksys70_struct *k)
+int not_optimized _ksys_work_files(ksys70_struct *k)
 {
     int status;
     asm_inline(
