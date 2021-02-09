@@ -2,7 +2,6 @@
 #define _SOCKET_H_
 
 #include <stddef.h>
-#include <ksys.h>
 #include <errno.h>
 
 // Socket Types
@@ -57,7 +56,6 @@
 #define SO_NONBLOCK (1<<31)
 
 #define PORT(X) (X<<8)
-#define err_code errno
 
 #pragma pack(push,1)
 struct sockaddr{
@@ -66,9 +64,7 @@ struct sockaddr{
     unsigned int sin_addr;
     unsigned long long sin_zero;
 }; 
-#pragma pack(pop)
 
-#pragma pack(push,1)
 typedef struct{
   unsigned int level;
   unsigned int optionname;
@@ -78,14 +74,37 @@ typedef struct{
 #pragma pack(pop)
 
 static inline 
+void _conv_socket_err(){
+    switch(errno){
+        case 1:  errno = ENOBUFS;
+        case 2:  errno = EINPROGRESS;
+        case 4:  errno = EOPNOTSUPP;
+        case 6:  errno = EWOULDBLOCK;
+        case 9:  errno = ENOTCONN;
+        case 10: errno = EALREADY;
+        case 11: errno = EINVAL;
+        case 12: errno = EMSGSIZE;
+        case 18: errno = ENOMEM;
+        case 20: errno = EADDRINUSE;
+        case 61: errno = ECONNREFUSED;
+        case 52: errno = ECONNRESET;
+        case 56: errno = EISCONN;
+        case 60: errno = ETIMEDOUT;
+        case 54: errno = ECONNABORTED;
+        default: errno = 0;
+    }
+}
+
+static inline 
 int socket(int domain, int type, int protocol)
 {
     int socket;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(socket)
+        :"=b"(errno), "=a"(socket)
         :"a"(75), "b"(0), "c"(domain), "d"(type), "S"(protocol)
     );
+    _conv_socket_err();
     return socket;
 }
 
@@ -95,9 +114,10 @@ int close(int socket)
     int status;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(1), "c"(socket)
     );
+    _conv_socket_err();
     return status;
 }
 
@@ -107,9 +127,10 @@ int bind(int socket, const struct sockaddr *addres, int addres_len)
     int status;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(2), "c"(socket), "d"(addres), "S"(addres_len)
     );
+    _conv_socket_err();
     return status;
 }
 
@@ -119,9 +140,10 @@ int listen(int socket, int backlog)
     int status;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(3), "c"(socket), "d"(backlog)
     );
+    _conv_socket_err();
     return status;
 }
 
@@ -131,9 +153,10 @@ int connect(int socket, const struct sockaddr* address, int socket_len)
     int status;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(4), "c"(socket), "d"(address), "S"(socket_len)
     );
+    _conv_socket_err();
     return status;
 }
 
@@ -143,9 +166,10 @@ accept(int socket, const struct sockaddr *address, int address_len)
     int new_socket;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(new_socket)
+        :"=b"(errno), "=a"(new_socket)
         :"a"(75), "b"(5), "c"(socket), "d"(address), "S"(address_len)
     );
+    _conv_socket_err();
     return new_socket;
 }
 
@@ -155,9 +179,10 @@ int send(int socket, const void *message, size_t msg_len, int flag)
     int status;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(6), "c"(socket), "d"(message), "S"(msg_len), "D"(flag)
     );
+    _conv_socket_err();
     return status;
 }
 
@@ -167,9 +192,10 @@ int recv(int socket, void *buffer, size_t buff_len, int flag)
     int status;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(7), "c"(socket), "d"(buffer), "S"(buff_len), "D"(flag)
     );
+    _conv_socket_err();
     return status;
 }
 
@@ -179,31 +205,36 @@ int setsockopt(int socket,const optstruct* opt)
     int status;
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(8), "c"(socket),"d"(opt)
     );
+    _conv_socket_err();
     return status;
 }
 
-static inline int getsockopt(int socket, optstruct* opt)
+static inline 
+int getsockopt(int socket, optstruct* opt)
 {
     int status; 
     asm_inline(
         "int $0x40"
-        :"=b"(err_code), "=a"(status)
+        :"=b"(errno), "=a"(status)
         :"a"(75), "b"(9), "c"(socket),"d"(opt)
     );
+    _conv_socket_err();
     return status;
 }
 
-static inline int socketpair(int *socket1, int *socket2)
+static inline 
+int socketpair(int *socket1, int *socket2)
 {
    asm_inline(
         "int $0x40"
         :"=b"(*socket2), "=a"(*socket1)
         :"a"(75), "b"(10)
     ); 
-    err_code=*socket2;
+    errno=*socket2;
+    _conv_socket_err();
     return *socket1;
 }
 
