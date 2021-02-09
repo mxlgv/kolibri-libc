@@ -76,22 +76,22 @@ typedef struct{
 static inline 
 void _conv_socket_err(){
     switch(errno){
-        case 1:  errno = ENOBUFS;
-        case 2:  errno = EINPROGRESS;
-        case 4:  errno = EOPNOTSUPP;
-        case 6:  errno = EWOULDBLOCK;
-        case 9:  errno = ENOTCONN;
-        case 10: errno = EALREADY;
-        case 11: errno = EINVAL;
-        case 12: errno = EMSGSIZE;
-        case 18: errno = ENOMEM;
-        case 20: errno = EADDRINUSE;
-        case 61: errno = ECONNREFUSED;
-        case 52: errno = ECONNRESET;
-        case 56: errno = EISCONN;
-        case 60: errno = ETIMEDOUT;
-        case 54: errno = ECONNABORTED;
-        default: errno = 0;
+        case 1:  errno = ENOBUFS; break;
+        case 2:  errno = EINPROGRESS; break;
+        case 4:  errno = EOPNOTSUPP; break; 
+        case 6:  errno = EWOULDBLOCK; break;
+        case 9:  errno = ENOTCONN; break;
+        case 10: errno = EALREADY; break;
+        case 11: errno = EINVAL; break;
+        case 12: errno = EMSGSIZE; break;
+        case 18: errno = ENOMEM; break;
+        case 20: errno = EADDRINUSE; break
+        case 61: errno = ECONNREFUSED; break;
+        case 52: errno = ECONNRESET; break;
+        case 56: errno = EISCONN; break;
+        case 60: errno = ETIMEDOUT; break
+        case 54: errno = ECONNABORTED; break
+        default: errno = 0; break;
     }
 }
 
