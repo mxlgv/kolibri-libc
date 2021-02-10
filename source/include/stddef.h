@@ -18,6 +18,8 @@ typedef unsigned char uint8_t;
 typedef unsigned short int uint16_t;
 typedef unsigned int uint32_t;
 typedef unsigned long long int uint64_t;
+typedef int64_t intmax_t;
+typedef uint64_t uintmax_t;
 #endif
 
 #ifndef NULL
