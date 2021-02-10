@@ -1,6 +1,6 @@
 #include <ksys.h>
 #include <string.h>
-#include <conio.h>
+#include <stdio.h>
 
 void reverse(char s[]) {
     int i, j; char c;
@@ -19,22 +19,13 @@ void itoa(int n, char s[]) {
 int main(int argc, char** argv) {
     char buf[16];
     int i;
-    
-    con_init_console_dll();    
-    con_write_asciiz("argc = ");
     itoa(argc, buf);
-    con_write_asciiz(buf);
-    con_write_asciiz("\n");
-
-    con_write_asciiz("Argument array:\n");
+    printf("argc = %s\n", buf);
+    printf("Argument array:\n");
 
     for (i = 0; i < argc; i++) {
-        con_write_asciiz("argv[");
         itoa(i, buf);
-        con_write_asciiz(buf);
-        con_write_asciiz("] = ");
-        con_write_asciiz(argv[i]);
-        con_write_asciiz("\n");
+        printf("argv[%s] = %d\n", argv[i]);
     }
     return 0;
  }
