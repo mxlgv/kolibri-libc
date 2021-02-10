@@ -1,5 +1,3 @@
-NAME = mathtest
-
 CC = gcc
 LD = ld
 KPACK = kpack --nologo

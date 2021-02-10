@@ -1,5 +1,3 @@
-NAME=argtest
-
 KTCC= ../bin/kos32-tcc
 KPACK= kpack
 
@@ -11,7 +9,7 @@ INCLUDE = -I ../source/include
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(KTCC) $(INCLUDE) $(SRC) -o $(NAME) -lc
+	$(KTCC) $(INCLUDE) $(SRC) -o $(NAME) -lm -lc 
 	$(KPACK) $(NAME)
 
 clean:
