@@ -9,7 +9,7 @@ INCLUDE = -I ../source/include
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(KTCC) $(INCLUDE) $(SRC) -o $(NAME) -lm -lc 
+	$(KTCC) $(INCLUDE) $(SRC) -o $(NAME) -lc -lm 
 	$(KPACK) $(NAME)
 
 clean:
