@@ -16,7 +16,8 @@ void itoa(int n, char s[]) {
     reverse(s);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     char buf[16];
     int i;
     itoa(argc, buf);
@@ -27,5 +28,6 @@ int main(int argc, char** argv) {
         itoa(i, buf);
         printf("argv[%s] = %d\n", argv[i]);
     }
+    debug_printf("Done!\n");
     return 0;
  }
