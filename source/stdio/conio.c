@@ -1,7 +1,7 @@
 #include <conio.h>
 #include <ksys.h>
 
-char* con_caption = "Console app";
+char* con_caption = "Console application";
 dword	*con_dll_ver;
 int   console_initdll_status;
 
