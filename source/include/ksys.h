@@ -61,7 +61,7 @@ typedef struct{
     char               *p21;
 } ksys70_struct;
 
-struct ksys_process_table{
+typedef struct {
   int cpu_usage;             //+0
   int window_pos_info;       //+4
   short int reserved1;       //+8
@@ -81,7 +81,7 @@ struct ksys_process_table{
   int clientheight;          //+66
   unsigned char window_state;//+70
   char reserved3[1024-71];   //+71
-};
+}ksys_proc_table;
 
 typedef unsigned int color_t;
 
@@ -664,6 +664,18 @@ int _ksys_get_thread_slot(int tid){
         "int $0x40"
         :"=a"(val)
         :"a"(18), "b"(21), "c"(tid)
+    );
+    return val;
+}
+
+static inline 
+int not_optimized _ksys_process_info(ksys_proc_table* table, int pid)
+{
+    int val;
+    asm_inline(
+        "int $0x40"
+        :"=a"(val)
+        :"a"(9), "b"(table), "c"(pid)
     );
     return val;
 }
