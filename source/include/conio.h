@@ -15,18 +15,6 @@ Adapted for tcc by Siemargl, 2016
 /*
 console.obj exports the following functions
 */
-typedef unsigned int dword; /* 32-bit unsigned integer */
-typedef unsigned short word; /* 16-bit unsigned integer */
-
-extern void stdcall (*con_init)(dword wnd_width, dword wnd_height,
-	dword scr_width, dword scr_height, const char* title);
-/* 	Console initialization. Must be called only once.
-wnd_width, wnd_height - width and height (in units of characters) of the visible 
-region; 
-scr_width, scr_height - width and height (in units of characters) of console;
-Any of these four parameters can be set to -1 (=0xFFFFFFFF)
-to use the library's default values;
-title - console window's caption. */
 
 extern void stdcall (*con_exit)(int bCloseWindow);
 /* 	You should call this funstion at the end of the program.
@@ -41,17 +29,17 @@ extern void stdcall (*con_write_asciiz)(const char* str);
 /*	Display ASCIIZ-string to the console at the current position, shifting
 the current position. */
 
-extern void stdcall (*con_write_string)(const char* str, dword length);
+extern void stdcall (*con_write_string)(const char* str, unsigned length);
 /* 	Similar to con_write_asciiz, but length of the string must be given as a 
 separate parameter */
 
 extern int cdecl (*con_printf)(const char* format, ...);
 /* 	Standard "printf" function from ANSI C. */
 
-extern dword stdcall (*con_get_flags)(void);
+extern unsigned stdcall (*con_get_flags)(void);
 /*	Get output flags. */
 
-extern dword stdcall (*con_set_flags)(dword new_flags);
+extern unsigned stdcall (*con_set_flags)(unsigned new_flags);
 /*	Set output flags. This function returns previous values. */
 
 /* Flags (bitmask): */
@@ -133,7 +121,7 @@ and second call returns the extended code (similar to the DOS-function
 input). Starting from version 7, after closing the console window,
 this function returns 0. */
 
-extern word stdcall (*con_getch2)(void);
+extern short stdcall (*con_getch2)(void);
 /*	Reads a character from the keyboard. Low byte contains the ASCII-code 
 (0 for extended characters), high byte - advanced code (like in BIOS 
 input functions). Starting from version 7, after closing the console
@@ -184,19 +172,12 @@ for x, from 0 to 1 for scr_height-y, scr_width scr_height and were asked if
 call con_init), then the corresponding coordinate of the cursor does not change.
 */
 
-extern	int   __console_initdll_status;
-/* == 1 if dll loaded */
+extern int con_is_load; 
+extern unsigned *con_dll_ver;
 
-extern 	dword	*con_dll_ver;
+extern int con_init(void);
 
-extern int con_init_console_dll(void);
-/*	load library and link function symbols. returns 1 if error
-called automatic in printf, otherwise, see __console_initdll_status
-*/
+extern int con_init_opt(int wnd_width, int wnd_height, int scr_width, int scr_height, const char* title);
 
-extern int con_init_console_dll_param(dword wnd_width, dword wnd_height,
-	dword scr_width, dword scr_height, const char* title);
-/*	work as con_init_console_dll, but call con_init with params
-*/
 
 #endif
