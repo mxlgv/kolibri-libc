@@ -2,25 +2,24 @@
 #include <ksys.h>
 
 char* con_caption = "Console application";
-dword	*con_dll_ver;
-int   console_initdll_status;
+unsigned *con_dll_ver;
+int con_is_load = 0;
 
 char* con_dllname="/sys/lib/console.obj";
 
-void stdcall (*con_init)(dword wnd_width, dword wnd_height,
-	dword scr_width, dword scr_height, const char* title);
+void stdcall (*con_init_hidden)(int wnd_width, int wnd_height,int scr_width, int scr_height, const char* title);
 void stdcall (*con_exit)(int bCloseWindow);
 void stdcall (*con_set_title)(const char* title);
 void stdcall (*con_write_asciiz)(const char* str);
-void stdcall (*con_write_string)(const char* str, dword length);
+void stdcall (*con_write_string)(const char* str, unsigned length);
 int cdecl (*con_printf)(const char* format, ...);
-dword stdcall (*con_get_flags)(void);
-dword stdcall (*con_set_flags)(dword new_flags);
+unsigned stdcall (*con_get_flags)(void);
+unsigned stdcall (*con_set_flags)(unsigned new_flags);
 int stdcall (*con_get_font_height)(void);
 int stdcall (*con_get_cursor_height)(void);
 int stdcall (*con_set_cursor_height)(int new_height);
 int stdcall (*con_getch)(void);
-word stdcall (*con_getch2)(void);
+short stdcall (*con_getch2)(void);
 int stdcall (*con_kbhit)(void);
 char* stdcall (*con_gets)(char* str, int n);
 char* stdcall (*con_gets2)(con_gets2_callback callback, char* str, int n);
@@ -28,7 +27,6 @@ void stdcall (*con_cls)();
 void stdcall (*con_get_cursor_pos)(int* px, int* py);
 void stdcall (*con_set_cursor_pos)(int x, int y);
 
-// don't change order in this! linked by index
 char* con_imports[] = {
 	"START", "version", "con_init", "con_write_asciiz", "con_write_string",
 	"con_printf", "con_exit", "con_get_flags", "con_set_flags", "con_kbhit",
@@ -38,10 +36,10 @@ char* con_imports[] = {
 	(char*)0
 };
 
-void con_lib_link(coff_export_table *exp, char** imports){
-
+void con_lib_link(coff_export_table *exp, char** imports)
+{
         con_dll_ver 		= _ksys_cofflib_getproc(exp, imports[1]);
-        con_init 			= _ksys_cofflib_getproc(exp, imports[2]);
+        con_init_hidden     = _ksys_cofflib_getproc(exp, imports[2]);
         con_write_asciiz	= _ksys_cofflib_getproc(exp, imports[3]);
         con_write_string	= _ksys_cofflib_getproc(exp, imports[4]);
         con_printf 			= _ksys_cofflib_getproc(exp, imports[5]);
@@ -63,31 +61,26 @@ void con_lib_link(coff_export_table *exp, char** imports){
 }
 
 
-int con_init_console_dll(void)
+int con_init(void)
 {
-    return con_init_console_dll_param(-1, -1, -1, -1, con_caption); 
+    return con_init_opt(-1, -1, -1, -1, con_caption); 
 }
 
 
-int con_init_console_dll_param(dword wnd_width, dword wnd_height,
-	dword scr_width, dword scr_height, const char* title)
-/*	work as con_init_console_dll, but call con_init with params
-*/
-{
-	coff_export_table *hDll;
-
-  	if (console_initdll_status == 1) return 0;
-    
-	if((hDll = _ksys_cofflib_load(con_dllname)) == 0){
-                _ksys_debug_puts("can't load lib\n");
-                return 1;
+int con_init_opt(int wnd_width, int wnd_height,int scr_width, int scr_height, const char* title)
+{	
+    if(!con_is_load){
+        coff_export_table *con_lib;
+	    con_lib = _ksys_cofflib_load(con_dllname);
+        if(con_lib==NULL){
+            _ksys_debug_puts("Error! Can't load console.obj lib\n");
+            return 1;
     	}
-    	con_lib_link(hDll, con_imports);
-
-    	con_init(wnd_width, wnd_height, scr_width, scr_height, title); 
-
-    	console_initdll_status = 1;
-
-    	return 0;
+    	con_lib_link(con_lib, con_imports);
+    	con_init_hidden(wnd_width, wnd_height, scr_width, scr_height, title); 
+    	con_is_load= 1;
+        return 0;
+    }
+    return 1;
 }
 
