@@ -11,12 +11,9 @@
 #define min(a, b) ((a)<(b) ? (a) : (b))
 #define max(a, b) ((a)>(b) ? (a) : (b))
 
-
-int atoi (const char *);
 long atol (const char *);
 long long atoll (const char *);
-
-char* itoa(int);
+//char* itoa(int n, char* s);
 
 int abs (int);
 long labs (long);
