@@ -1,0 +1,21 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install fasm
+      run: chmod u+x $PWD/bin/fasm && export PATH=$PATH:$PWD/bin
+    - name: Build libc
+      run: cd source && make
+    - name: Build math
+      run: cd .. && cd libmath && make
