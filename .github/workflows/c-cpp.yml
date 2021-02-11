@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: make
-      run: cd source && make
+      run:  export PATH=$PATH:$PWD/bin && echo $PATH && cd source && make
