@@ -1,7 +1,7 @@
-#include <ksys.h>
 #include <stdio.h>
-#include <conio.h>
 #include <string.h>
+
+#include "conio.h"
 
 int puts(const char *str)
 {
