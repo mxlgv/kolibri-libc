@@ -20,7 +20,7 @@ char* stdcall (*__con_gets2)(__con_gets2_callback callback, char* str, int n);
 static void __con_lib_link(coff_export_table *exp)
 {
     __con_dll_ver       = _ksys_cofflib_getproc(exp, "con_dll_ver");
-    __con_init_hidden   = _ksys_cofflib_getproc(exp, "con_init_hidden");
+    __con_init_hidden   = _ksys_cofflib_getproc(exp, "con_init");
     __con_write_asciiz  = _ksys_cofflib_getproc(exp, "con_write_asciiz");
     __con_write_string  = _ksys_cofflib_getproc(exp, "con_write_string");
     __con_getch         = _ksys_cofflib_getproc(exp, "con_getch");
