@@ -5,8 +5,8 @@
 
 int puts(const char *str)
 {
-    con_init();
-    con_write_asciiz(str);
-    con_write_asciiz("\n");
+    __con_init();
+    __con_write_asciiz(str);
+    __con_write_asciiz("\n");
     return strlen(str);
 }
