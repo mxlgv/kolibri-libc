@@ -1,7 +1,7 @@
 /*
 
 This is adapded thunk for console.obj sys library
-.h is equal to svn:\programs\develop\libraries\console\console_en.txt 
+Only for internal use in stdio.h
 
 Adapted for tcc by Siemargl, 2016
 
@@ -12,19 +12,6 @@ Adapted for tcc by Siemargl, 2016
 #define cdecl   __attribute__ ((cdecl))
 #define stdcall __attribute__ ((stdcall))
 
-/*
-console.obj exports the following functions
-*/
-
-extern void stdcall (*__con_exit)(int bCloseWindow);
-/* 	You should call this funstion at the end of the program.
-If bCloseWindow is zero, the string "[Finished]" will be added to the caption of 
-the window and the console window will remain on the screen until the user
-closes it. */
-
-extern void stdcall (*__con_set_title)(const char* title);
-/* 	Set new window caption. */
-
 extern void stdcall (*__con_write_asciiz)(const char* str);
 /*	Display ASCIIZ-string to the console at the current position, shifting
 the current position. */
@@ -32,85 +19,6 @@ the current position. */
 extern void stdcall (*__con_write_string)(const char* str, unsigned length);
 /* 	Similar to __con_write_asciiz, but length of the string must be given as a 
 separate parameter */
-
-extern int cdecl (*__con_printf)(const char* format, ...);
-/* 	Standard "printf" function from ANSI C. */
-
-extern unsigned stdcall (*__con_get_flags)(void);
-/*	Get output flags. */
-
-extern unsigned stdcall (*__con_set_flags)(unsigned new_flags);
-/*	Set output flags. This function returns previous values. */
-
-/* Flags (bitmask): */
-/* text color */
-#define _CON_COLOR_BLUE		0x01
-#define _CON_COLOR_GREEN	0x02
-#define _CON_COLOR_RED		0x04
-#define _CON_COLOR_BRIGHT	0x08
-/* background color */
-#define _CON_BGR_BLUE		0x10
-#define _CON_BGR_GREEN		0x20
-#define _CON_BGR_RED		0x40
-#define _CON_BGR_BRIGHT		0x80
-/* output controls */
-#define _CON_IGNORE_SPECIALS	0x100
-/* if this flag is cleared, function interprets special characters:
-10 ('\n') - next line
-13 ('\r') - carriage return
-8 ('\b') - backspace
-9 ('\t') - tab
-27 ('\033' = '\x1B') - the beginning of Esc-sequences;
-otherwise, these characters will be displayed like ordinary characters. */
-/* Supported Esc-sequences:
-	Esc[<number1>;<number2>;<number3>m - choice of character attributes:
-		You can specify one, two or three codes in any order;
-		0 = normal mode (white on black)
-		1 = bright selection
-		5 = bright background
-		7 = inverse mode (black on white)
-		30 = black characters
-		31 = red characters
-		32 = green characters
-		33 = brown characters
-		34 = blue characters
-		35 = purple characters
-		36 = turqoise characters
-		37 = white characters
-		40 = black background
-		41 = red background
-		42 = green background
-		43 = brown background
-		44 = blue background
-		45 = purple background
-		46 = turqoise background
-		47 = white background
-	The following sequences appeared in version 5 of library:
-	Esc[2J - clear screen, move cursor to upper left corner
-	Esc[<number1>;<number2>H = Esc[<number1>;<number2>f -
-		move cursor to <number1>,<number2>
-	Esc[<number>A - move cursor to <number> lines up
-	Esc[<number>B - move cursor to <number> lines down
-	Esc[<number>C - move cursor to <number> positions right
-	Esc[<number>D - move cursor to <number> positions left
-*/
-/* signal "console closed"; appeared in version 6;
-	ignored by __con_set_flags */
-#define _CON_WINDOW_CLOSED 0x200
-/* The default value for flags = 7. (grey text on black background) */
-
-extern int stdcall (*__con_get_font_height)(void);
-/*	Get the height of the font. */
-
-extern int stdcall (*__con_get_cursor_height)(void);
-/*	Get the height of the cursor. */
-
-extern int stdcall (*__con_set_cursor_height)(int new_height);
-/* 	Set the height of the cursor. This function returns previous value.
-An attempt to set the value out of the correct interval (from 0 to 
-font_height-1) is ignored.
-Cursor with zero height isn't displayed.
-Default value: - 15% from  font height. */
 
 extern int stdcall (*__con_getch)(void);
 /*	Get one character from the keyboard. 
@@ -158,26 +66,10 @@ to display it; 3 = immediately exit the function.
 Starting from version 6, the function returns a pointer to the entered
 line with the successful reading, and NULL if the console window was closed. */
 
-extern void stdcall (*__con_cls)();
-/*	Clear screen and set cursor at upper left corner. */
-
-
-extern void stdcall (*__con_get_cursor_pos)(int* px, int* py);
-/*	Wrote current (x) coordinate of cursor to *px, and (y) to *py. */
-
-extern void stdcall (*__con_set_cursor_pos)(int x, int y);
-/*	Set the cursor position to the specified coordinates. If any of the
-parameters beyond the relevant range (from 0 to 1 scr_width-
-for x, from 0 to 1 for scr_height-y, scr_width scr_height and were asked if
-call __con_init), then the corresponding coordinate of the cursor does not change.
-*/
-
 extern int __con_is_load; 
 extern unsigned *__con_dll_ver;
 
 extern int __con_init(void);
-
 extern int __con_init_opt(int wnd_width, int wnd_height, int scr_width, int scr_height, const char* title);
-
 
 #endif
