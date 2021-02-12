@@ -1,7 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "conio.h"
 #include "format_print.h"
 
-int vprintf(const char* format, va_list va)
+int vprintf ( const char * format, va_list arg )
 {
-  char buffer[1];
-  return _vsnprintf(_out_char, buffer, (size_t)-1, format, va);
+  int len = 0;
+  char s[4096];
+
+  __con_init();
+  len = vsnprintf(s, 4096, format, arg);
+  __con_write_string(s, len);
+  return(len);
 }
