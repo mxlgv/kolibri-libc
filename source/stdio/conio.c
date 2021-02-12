@@ -17,7 +17,7 @@ int stdcall (*__con_kbhit)(void);
 char* stdcall (*__con_gets)(char* str, int n);
 char* stdcall (*__con_gets2)(__con_gets2_callback callback, char* str, int n);
 
-static void __con_lib_link(coff_export_table *exp, char** imports)
+static void __con_lib_link(coff_export_table *exp)
 {
     __con_dll_ver       = _ksys_cofflib_getproc(exp, "con_dll_ver");
     __con_init_hidden   = _ksys_cofflib_getproc(exp, "con_init_hidden");
@@ -46,7 +46,7 @@ int __con_init_opt(int wnd_width, int wnd_height,int scr_width, int scr_height, 
             _ksys_debug_puts("Error! Can't load console.obj lib\n");
             return 1;
         }
-        __con_lib_link(__con_lib, __con_imports);
+        __con_lib_link(__con_lib);
         __con_init_hidden(wnd_width, wnd_height, scr_width, scr_height, title); 
         __con_is_load= 1;
         return 0;
