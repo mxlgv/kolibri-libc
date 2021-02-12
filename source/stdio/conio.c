@@ -1,11 +1,11 @@
 #include <conio.h>
 #include <ksys.h>
 
-char* con_caption = "Console application";
+static char* con_caption = "Console application";
+static char* con_dllname = "/sys/lib/console.obj";
+
 unsigned *con_dll_ver;
 int con_is_load = 0;
-
-char* con_dllname="/sys/lib/console.obj";
 
 void stdcall (*con_init_hidden)(int wnd_width, int wnd_height,int scr_width, int scr_height, const char* title);
 void stdcall (*con_exit)(int bCloseWindow);
@@ -27,7 +27,7 @@ void stdcall (*con_cls)();
 void stdcall (*con_get_cursor_pos)(int* px, int* py);
 void stdcall (*con_set_cursor_pos)(int x, int y);
 
-char* con_imports[] = {
+static char* con_imports[] = {
 	"START", "version", "con_init", "con_write_asciiz", "con_write_string",
 	"con_printf", "con_exit", "con_get_flags", "con_set_flags", "con_kbhit",
 	"con_getch", "con_getch2", "con_gets", "con_gets2", "con_get_font_height",
@@ -36,7 +36,7 @@ char* con_imports[] = {
 	(char*)0
 };
 
-void con_lib_link(coff_export_table *exp, char** imports)
+static void con_lib_link(coff_export_table *exp, char** imports)
 {
         con_dll_ver 		= _ksys_cofflib_getproc(exp, imports[1]);
         con_init_hidden     = _ksys_cofflib_getproc(exp, imports[2]);
