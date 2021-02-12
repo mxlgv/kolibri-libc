@@ -1,5 +1,6 @@
-#include <conio.h>
 #include <ksys.h>
+
+#include "conio.h"
 
 static char* __con_caption = "Console application";
 static char* __con_dllname = "/sys/lib/console.obj";
