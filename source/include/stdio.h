@@ -45,5 +45,4 @@ int  vprintf(const char* format, va_list va);
 
 void debug_printf(const char* format, ...);
 
-
 #endif  // _STDIO_H_
