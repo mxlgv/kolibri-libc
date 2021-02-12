@@ -1,7 +1,7 @@
 INCLUDE = include
 LIB_DIR = ../bin/lib
 LIBNAME = $(LIB_DIR)/libc.a
-CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC -Os -fno-pie
+CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC -Os -fno-pie -ffrestanding
 DIRS :=  string stdlib stdio sys
 
 cfiles := $(foreach dir,$(DIRS),$(patsubst %.c, %.o, $(wildcard $(dir)/*.c)))
