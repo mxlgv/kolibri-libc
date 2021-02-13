@@ -2,14 +2,14 @@ KTCC= ../bin/kos32-tcc
 KPACK= kpack
 
 SRC=$(NAME).c
-INCLUDE = -I ../source/include
+CFLAGS = -I ../source/include -stack=1048576  # set stack size 1Mb
 
 .PHONY: all
 
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(KTCC) $(INCLUDE) $(SRC) -o $(NAME) -lc -lm 
+	$(KTCC) $(CFLAGS) $(SRC) -o $(NAME) -lc -lm 
 	$(KPACK) $(NAME)
 
 clean:
