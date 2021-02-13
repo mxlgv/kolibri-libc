@@ -1,12 +1,9 @@
-#include <ksys.h>
-#include <conio.h>
 #include <math.h>
+#include <stdio.h>
 
 int main() {
-	con_init_console_dll();
-	con_write_asciiz("Math testing:\n");
-	con_printf("sqrt(25) = %d\n", (int)sqrt(25));
-	con_printf("pow(2, 2) = %d\n", (int)pow(2, 2));
-	con_exit(0);
+	puts("Math testing:\n");
+	printf("sqrt(25) = %f\n", sqrt(25));
+	printf("pow(2, 2) = %f\n", pow(2, 2));
 	return 0;
 }
