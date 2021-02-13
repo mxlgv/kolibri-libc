@@ -1,3 +1,4 @@
+AR = ar -rcs
 INCLUDE = include
 LIB_DIR = ../bin/lib
 LIBNAME = $(LIB_DIR)/libc.a
@@ -10,22 +11,32 @@ asmfiles := $(foreach dir,$(DIRS),$(patsubst %.asm, %.o, $(wildcard $(dir)/*.asm
 .PHONY: clean all
 
 ifdef windir
-doClean = del /F /Q $(subst /,\,$(cfiles)) $(subst /,\,$(asmfiles))
+cfiles := $(subst /,\,$(cfiles))
+asmfiles := $(subst /,\,$(asmfiles))
+LIB_DIR := $(subst /,\,$(LIB_DIR))
+LIBNAME := $(subst /,\,$(LIBNAME))
+RM = del /F /Q
+MKDIR_P = md
 else
-doClean = rm $(cfiles) $(asmfiles)
+RM = rm -rf
+MKDIR_P = mkdir -p
 endif
 
-all: $(cfiles) $(asmfiles)
-	mkdir -p $(LIB_DIR) 
-	ar -rcs $(LIBNAME) $^
+all: $(cfiles) $(asmfiles) $(LIB_DIR) $(LIBNAME)
 	fasm crt/crt0.asm ../bin/lib/crt0.o
+
+$(LIBNAME): $(cfiles) $(asmfiles)
+	$(AR) $(LIBNAME) $^
+
+$(LIB_DIR):
+	$(MKDIR_P) $(LIB_DIR)
 
 $(asmfiles):
 	fasm $*.asm $*.o
 
 clean:
-	$(doClean)
-	rm -f $(LIBNAME)
+	$(RM) $(cfiles) $(asmfiles)
+	$(RM) $(LIBNAME)
 
 test:
 	make -C ../test -f Makefile.tcc
