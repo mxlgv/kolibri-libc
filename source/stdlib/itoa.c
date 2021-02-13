@@ -1,6 +1,6 @@
 #include <string.h>
-
-char* itoa(int n,char* s)
+/*
+char* itoa(int n, char* s)
 {
   int sign;
   char *ptr;
@@ -17,4 +17,4 @@ char* itoa(int n,char* s)
   *ptr = '\0';
   return strrev(s);
 }
- 
+*/
