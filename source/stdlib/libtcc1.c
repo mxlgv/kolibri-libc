@@ -147,8 +147,7 @@ union float_long {
 #endif
 
 /* most of this code is taken from libgcc2.c from gcc */
-
-static UDWtype __udivmoddi4 (UDWtype n, UDWtype d, UDWtype *rp)
+UDWtype __udivmoddi4 (UDWtype n, UDWtype d, UDWtype *rp)
 {
   DWunion ww;
   DWunion nn, dd;
