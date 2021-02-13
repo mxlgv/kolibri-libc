@@ -32,4 +32,6 @@ void *calloc(size_t num, size_t size);
 void *realloc(void *ptr, size_t newsize);
 void free(void *ptr);
 
+void exit(int status);
+
 #endif
