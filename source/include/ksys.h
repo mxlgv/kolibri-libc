@@ -486,7 +486,7 @@ int _ksys_clip_unlock()
 /* Working with time */
 
 static inline
-unsigned get_tick_count()
+unsigned _ksys_get_tick_count()
 {
     unsigned val;
     asm_inline(
@@ -498,7 +498,7 @@ unsigned get_tick_count()
 }
  
 static inline
-uint64_t get_ns_count()
+uint64_t  _ksys_get_ns_count()
 {
     uint64_t val;
     asm_inline(
@@ -510,7 +510,7 @@ uint64_t get_ns_count()
 }
 
 static inline 
-void delay(unsigned time)
+void _ksys_delay(unsigned time)
 {
     asm_inline(
         "int $0x40"
