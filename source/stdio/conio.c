@@ -16,6 +16,7 @@ short stdcall (*__con_getch2)(void);
 int stdcall (*__con_kbhit)(void);
 char* stdcall (*__con_gets)(char* str, int n);
 char* stdcall (*__con_gets2)(__con_gets2_callback callback, char* str, int n);
+void stdcall (*__con_exit)(int status);
 
 static void __con_lib_link(coff_export_table *exp)
 {
@@ -28,6 +29,7 @@ static void __con_lib_link(coff_export_table *exp)
     __con_kbhit         = _ksys_cofflib_getproc(exp, "con_kbhit");
     __con_gets          = _ksys_cofflib_getproc(exp, "con_gets");
     __con_gets2         = _ksys_cofflib_getproc(exp, "con_gets2");
+    __con_exit          = _ksys_cofflib_getproc(exp, "con_exit");
 }
 
 

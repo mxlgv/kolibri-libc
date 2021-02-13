@@ -71,5 +71,6 @@ extern unsigned *__con_dll_ver;
 
 extern int __con_init(void);
 extern int __con_init_opt(int wnd_width, int wnd_height, int scr_width, int scr_height, const char* title);
+extern void stdcall (*__con_exit)(int status);
 
 #endif
