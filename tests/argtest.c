@@ -1,9 +1,11 @@
 #include <ksys.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 int main(int argc, char** argv)
 {
-    char test_stack[1000];
+    char test_stack[1000000];
     printf("argc = %d\n", argc);
     puts("Argument array:");
 
@@ -11,5 +13,5 @@ int main(int argc, char** argv)
         printf("argv[%d] = %s\n", i, argv[i]);    
     }
     debug_printf("Done!\n");
-    return 0;
+    exit(0);
  }
