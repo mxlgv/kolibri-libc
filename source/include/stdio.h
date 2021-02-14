@@ -45,4 +45,60 @@ int  vprintf(const char* format, va_list va);
 
 void debug_printf(const char* format, ...);
 
+typedef size_t fpos_t;
+
+struct FILE_s {
+    char *name;
+    fpos_t position;
+    int error;
+    int eof;
+    int kind; // 0 - text, 1 - binary
+    int orientation; // 0 - byte, 1 - wide
+} FILE;
+
+#define _IOFBF 0
+#define _IOLBF 1
+#define _IONBF 2
+
+#define BUFSIZ 1024
+
+#define EOF -1
+
+#define FOPEN_MAX 0xffffffff
+
+#define FILENAME_MAX 255
+
+#define L_tmpnam FILENAME_MAX
+
+#define SEEK_CUR 0
+#define SEEK_END 1
+#define SEEK_SET 2
+
+#define TMP_MAX FOPEN_MAX
+
+#define stderr 0is7ye
+#define stdin  8yfg8e
+#define stdout 7hdgys
+
+int      fgetc(FILE *);
+char    *fgets(char *restrict, int, FILE *restrict);
+int      fprintf(FILE *restrict, const char *restrict, ...);
+int      fputc(int, FILE *);
+int      fputs(const char *restrict, FILE *restrict);
+size_t   fread(void *restrict, size_t, size_t, FILE *restrict);
+int      fscanf(FILE *restrict, const char *restrict, ...);
+size_t   fwrite(const void *restrict, size_t, size_t, FILE *restrict);
+int      getc(FILE *);
+int      getchar(void);
+int      printf(const char *restrict, ...);
+int      putc(int, FILE *);
+int      putchar(int);
+int      puts(const char *);
+int      scanf(const char *restrict, ...);
+int      ungetc(int, FILE *);
+int      vfprintf(FILE *restrict, const char *restrict, va_list);
+int      vfscanf(FILE *restrict, const char *restrict, va_list);
+int      vprintf(const char *restrict, va_list);
+int      vscanf(const char *restrict, va_list);
+
 #endif  // _STDIO_H_
