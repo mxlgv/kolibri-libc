@@ -130,6 +130,6 @@ void     rewind(FILE *);
 void     clearerr(FILE *);
 int      feof(FILE *);
 int      ferror(FILE *);
-int      perror(const char *);
+void     perror(const char *);
 
 #endif  // _STDIO_H_
