@@ -57,10 +57,24 @@ typedef struct{
     union {
         unsigned        p16;
         char           *new_name;
+        void           *bdfe;
     };
     char                p20;
     char               *p21;
 }ksys70_t;
+
+typedef struct {
+    unsigned attributes;
+    unsigned name_cp;
+    char creation_time[4];
+    char creation_date[4];
+    char last_access_time[4];
+    char last_access_date[4];
+    char last_modification_time[4];
+    char last_modification_date[4];
+    unsigned long long size;
+    char name[0];
+} BDFE_struct;
 
 typedef struct {
   int cpu_usage;             //+0
@@ -762,6 +776,17 @@ int not_optimized _ksys_work_files(ksys70_t *k)
         :"a"(70), "b"(k)
     );
     return status;
+}
+
+static inline
+int not_optimized _ksys_file_get_info(char *name, BDFE_struct *bdfe)
+{
+    ksys70_struct k;
+    k.p00 = 5;
+    k.bdfe = bdfe;
+    k.p20 = 0;
+    k.p21 = name;
+    return _ksys_work_files(&k);
 }
 
 static inline

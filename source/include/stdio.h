@@ -47,13 +47,21 @@ void debug_printf(const char* format, ...);
 
 typedef size_t fpos_t;
 
+#define _STDIO_F_R 1 << 0 // Read
+#define _STDIO_F_W 1 << 1 // Write
+#define _STDIO_F_A 1 << 2 // Append
+#define _STDIO_F_X 1 << 3 // eXclusive
+#define _STDIO_F_B 1 << 4 // Binary
+
 typedef struct FILE_s {
     char *name;
     fpos_t position;
     int error;
     int eof;
-    int kind; // 0 - text, 1 - binary
-    int orientation; // 0 - byte, 1 - wide
+    int kind; // 0 - undiefned, 1 - text, 2 - binary
+    int orientation; // 0 - undiefned, 1 - byte, 2 - wide
+    int mode; // flags _STDIO_F_*
+    int append_offset; // do not seek before this point ("a" mode)
 } FILE;
 
 #define _IOFBF 0
@@ -104,5 +112,7 @@ int      vscanf(const char *restrict, va_list);
 int      remove(const char *);
 int      rename(const char *, const char *);
 char    *tmpnam(char *);
+
+FILE    *fopen(const char *restrict, const char *restrict);
 
 #endif  // _STDIO_H_
