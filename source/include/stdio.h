@@ -128,5 +128,6 @@ long     ftell(FILE *);
 void     rewind(FILE *);
 
 void     clearerr(FILE *);
+int      feof(FILE *);
 
 #endif  // _STDIO_H_
