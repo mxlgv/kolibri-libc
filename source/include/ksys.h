@@ -794,7 +794,7 @@ int not_optimized _ksys_file_read_file(char *name, unsigned long long offset, un
     asm_inline(
         "int $0x40"
         :"=a"(status), "=b"(bytes_read_v)
-        :"a"(70), "b"(k)
+        :"a"(70), "b"(&k)
     );
     if (!status) {
         *bytes_read = bytes_read_v;
