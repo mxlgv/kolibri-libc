@@ -132,4 +132,6 @@ int      feof(FILE *);
 int      ferror(FILE *);
 void     perror(const char *);
 
+size_t   fread(void *restrict, size_t, size_t, FILE *restrict);
+
 #endif  // _STDIO_H_

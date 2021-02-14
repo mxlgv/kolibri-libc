@@ -58,6 +58,7 @@ typedef struct{
         unsigned        p16;
         char           *new_name;
         void           *bdfe;
+        void           *buf16;
     };
     char                p20;
     char               *p21;
@@ -775,6 +776,29 @@ int not_optimized _ksys_work_files(ksys70_t *k)
         :"=a"(status)
         :"a"(70), "b"(k)
     );
+    return status;
+}
+
+static inline
+int not_optimized _ksys_file_read_file(char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_read)
+{
+    ksys70_t k;
+    k.p00 = 0;
+    k.p04 = offset;
+    k.p12 = size;
+    k.buf16 = buf;
+    k.p20 = 0;
+    k.p21 = name;
+    int status;
+    unsigned bytes_read_v;
+    asm_inline(
+        "int $0x40"
+        :"=a"(status), "=b"(bytes_read_v)
+        :"a"(70), "b"(k)
+    );
+    if (!status) {
+        *bytes_read = bytes_read_v;
+    }
     return status;
 }
 
