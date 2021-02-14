@@ -54,10 +54,28 @@ typedef struct{
     unsigned            p00;
     unsigned long long  p04;
     unsigned            p12;
-    unsigned            p16;
+    union {
+        unsigned        p16;
+        char           *new_name;
+        void           *bdfe;
+        void           *buf16;
+    };
     char                p20;
     char               *p21;
 }ksys70_t;
+
+typedef struct {
+    unsigned attributes;
+    unsigned name_cp;
+    char creation_time[4];
+    char creation_date[4];
+    char last_access_time[4];
+    char last_access_date[4];
+    char last_modification_time[4];
+    char last_modification_date[4];
+    unsigned long long size;
+    char name[0];
+} BDFE_struct;
 
 typedef struct {
   int cpu_usage;             //+0
@@ -759,6 +777,84 @@ int not_optimized _ksys_work_files(ksys70_t *k)
         :"a"(70), "b"(k)
     );
     return status;
+}
+
+static inline
+int not_optimized _ksys_file_read_file(char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_read)
+{
+    ksys70_t k;
+    k.p00 = 0;
+    k.p04 = offset;
+    k.p12 = size;
+    k.buf16 = buf;
+    k.p20 = 0;
+    k.p21 = name;
+    int status;
+    unsigned bytes_read_v;
+    asm_inline(
+        "int $0x40"
+        :"=a"(status), "=b"(bytes_read_v)
+        :"a"(70), "b"(&k)
+    );
+    if (!status) {
+        *bytes_read = bytes_read_v;
+    }
+    return status;
+}
+
+static inline
+int not_optimized _ksys_file_write_file(char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_written)
+{
+    ksys70_t k;
+    k.p00 = 3;
+    k.p04 = offset;
+    k.p12 = size;
+    k.buf16 = buf;
+    k.p20 = 0;
+    k.p21 = name;
+    int status;
+    unsigned bytes_written_v;
+    asm_inline(
+        "int $0x40"
+        :"=a"(status), "=b"(bytes_written_v)
+        :"a"(70), "b"(&k)
+    );
+    if (!status) {
+        *bytes_written = bytes_written_v;
+    }
+    return status;
+}
+
+static inline
+int not_optimized _ksys_file_get_info(char *name, BDFE_struct *bdfe)
+{
+    ksys70_t k;
+    k.p00 = 5;
+    k.bdfe = bdfe;
+    k.p20 = 0;
+    k.p21 = name;
+    return _ksys_work_files(&k);
+}
+
+static inline
+int not_optimized _ksys_file_delete(char *name)
+{
+    ksys70_t k;
+    k.p00 = 8;
+    k.p20 = 0;
+    k.p21 = name;
+    return _ksys_work_files(&k);
+}
+
+static inline
+int not_optimized _ksys_file_rename(char *name, char *new_name)
+{
+    ksys70_t k;
+    k.p00 = 10;
+    k.new_name = new_name;
+    k.p20 = 0;
+    k.p21 = name;
+    return _ksys_work_files(&k);
 }
 
 #endif // _KSYS_H_
