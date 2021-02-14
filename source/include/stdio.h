@@ -127,4 +127,6 @@ int      fsetpos(FILE *, const fpos_t *);
 long     ftell(FILE *);
 void     rewind(FILE *);
 
+void     clearerr(FILE *);
+
 #endif  // _STDIO_H_
