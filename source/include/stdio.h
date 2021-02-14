@@ -111,6 +111,7 @@ int      vscanf(const char *restrict, va_list);
 
 int      remove(const char *);
 int      rename(const char *, const char *);
+FILE    *tmpfile(void);
 char    *tmpnam(char *);
 
 FILE    *fopen(const char *restrict, const char *restrict);
