@@ -1,5 +1,4 @@
 #include <ksys.h>
-
 #include "conio.h"
 
 static char* __con_caption = "Console application";
@@ -18,7 +17,7 @@ char* stdcall (*__con_gets)(char* str, int n);
 char* stdcall (*__con_gets2)(__con_gets2_callback callback, char* str, int n);
 void stdcall (*__con_exit)(int status);
 
-static void __con_lib_link(coff_export_table *exp)
+static void __con_lib_link(ksys_coff_etable_t *exp)
 {
     __con_dll_ver       = _ksys_cofflib_getproc(exp, "con_dll_ver");
     __con_init_hidden   = _ksys_cofflib_getproc(exp, "con_init");
@@ -42,7 +41,7 @@ int __con_init(void)
 int __con_init_opt(int wnd_width, int wnd_height,int scr_width, int scr_height, const char* title)
 {   
     if(!__con_is_load){
-        coff_export_table *__con_lib;
+        ksys_coff_etable_t *__con_lib;
         __con_lib = _ksys_cofflib_load(__con_dllname);
         if(__con_lib==NULL){
             _ksys_debug_puts("Error! Can't load console.obj lib\n");
