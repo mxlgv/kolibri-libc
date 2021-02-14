@@ -6,7 +6,7 @@ static buf[FILENAME_MAX + 1];
 static int static_index = 0;
 
 char *tmpnam(char *name) {
-	ksys_proc_table table;
+	ksys_proc_table_t table;
 	_ksys_process_info(&table, -1);
 
 	char *out = name ? name : buf;

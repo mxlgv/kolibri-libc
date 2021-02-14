@@ -781,7 +781,7 @@ int not_optimized _ksys_work_files(ksys70_t *k)
 static inline
 int not_optimized _ksys_file_get_info(char *name, BDFE_struct *bdfe)
 {
-    ksys70_struct k;
+    ksys70_t k;
     k.p00 = 5;
     k.bdfe = bdfe;
     k.p20 = 0;
@@ -792,7 +792,7 @@ int not_optimized _ksys_file_get_info(char *name, BDFE_struct *bdfe)
 static inline
 int not_optimized _ksys_file_delete(char *name)
 {
-    ksys70_struct k;
+    ksys70_t k;
     k.p00 = 8;
     k.p20 = 0;
     k.p21 = name;
@@ -802,7 +802,7 @@ int not_optimized _ksys_file_delete(char *name)
 static inline
 int not_optimized _ksys_file_rename(char *name, char *new_name)
 {
-    ksys70_struct k;
+    ksys70_t k;
     k.p00 = 10;
     k.new_name = new_name;
     k.p20 = 0;
