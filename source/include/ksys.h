@@ -761,4 +761,14 @@ int not_optimized _ksys_work_files(ksys70_t *k)
     return status;
 }
 
+static inline
+int not_optimized _ksys_file_delete(char *name)
+{
+    ksys70_struct k;
+    k.p00 = 8;
+    k.p20 = 0;
+    k.p21 = name;
+    return _ksys_work_files(&k);
+}
+
 #endif // _KSYS_H_
