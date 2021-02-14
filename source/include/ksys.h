@@ -54,7 +54,10 @@ typedef struct{
     unsigned            p00;
     unsigned long long  p04;
     unsigned            p12;
-    unsigned            p16;
+    union {
+        unsigned        p16;
+        char           *new_name;
+    };
     char                p20;
     char               *p21;
 }ksys70_t;
@@ -766,6 +769,17 @@ int not_optimized _ksys_file_delete(char *name)
 {
     ksys70_struct k;
     k.p00 = 8;
+    k.p20 = 0;
+    k.p21 = name;
+    return _ksys_work_files(&k);
+}
+
+static inline
+int not_optimized _ksys_file_rename(char *name, char *new_name)
+{
+    ksys70_struct k;
+    k.p00 = 10;
+    k.new_name = new_name;
     k.p20 = 0;
     k.p21 = name;
     return _ksys_work_files(&k);
