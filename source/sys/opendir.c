@@ -19,7 +19,7 @@ DIR* opendir(const char* path)
 
     list->pos=0;
     unsigned num_of_file=0;
-    ksys70_struct inf;
+    ksys70_t inf;
 
     inf.p00 = 1;
     inf.p04 = 0;
