@@ -115,6 +115,7 @@ FILE    *tmpfile(void);
 char    *tmpnam(char *);
 
 int      fclose(FILE *);
+int      fflush(FILE *);
 FILE    *fopen(const char *restrict, const char *restrict);
 
 #endif  // _STDIO_H_
