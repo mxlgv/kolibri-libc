@@ -125,5 +125,6 @@ int      fgetpos(FILE *restrict, fpos_t *restrict);
 int      fseek(FILE *, long, int);
 int      fsetpos(FILE *, const fpos_t *);
 long     ftell(FILE *);
+void     rewind(FILE *);
 
 #endif  // _STDIO_H_
