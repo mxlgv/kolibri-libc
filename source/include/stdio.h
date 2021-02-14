@@ -122,5 +122,6 @@ void     setbuf(FILE *restrict, char *restrict);
 int      setvbuf(FILE *restrict, char *restrict, int, size_t);
 
 int      fgetpos(FILE *restrict, fpos_t *restrict);
+int      fseek(FILE *, long, int);
 
 #endif  // _STDIO_H_
