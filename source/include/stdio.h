@@ -129,5 +129,6 @@ void     rewind(FILE *);
 
 void     clearerr(FILE *);
 int      feof(FILE *);
+int      ferror(FILE *);
 
 #endif  // _STDIO_H_
