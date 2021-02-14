@@ -15,7 +15,7 @@ typedef struct {
     unsigned char blue;
     unsigned char green;
     unsigned char red;
-}RGB;
+}rgb_t;
  
 #pragma pack(push,1)
 typedef union{
@@ -24,7 +24,7 @@ typedef union{
         short  x;
         short  y;
     };
-} pos_t;
+}ksys_pos_t;
 
 typedef union oskey_t{
     unsigned val;
@@ -33,7 +33,7 @@ typedef union oskey_t{
         unsigned char code;
         unsigned char ctrl_key;
     };
-} oskey_t;
+}ksys_oskey_t;
 
 typedef struct{
   unsigned     handle;
@@ -42,16 +42,14 @@ typedef struct{
   int          inp_size;
   void         *output;
   int          out_size;
-}ioctl_t;
- 
-typedef union{
-    struct{
-        void   *data;
-        size_t  size;
-    } x;
-    unsigned long long raw;
-}ufile_t;
+}ksys_ioctl_t;
 
+typedef struct{
+    void *data;
+    size_t size;
+}ksys_ufile_t;
+
+ 
 typedef struct{
     unsigned            p00;
     unsigned long long  p04;
@@ -59,7 +57,7 @@ typedef struct{
     unsigned            p16;
     char                p20;
     char               *p21;
-} ksys70_struct;
+}ksys70_t;
 
 typedef struct {
   int cpu_usage;             //+0
@@ -81,39 +79,39 @@ typedef struct {
   int clientheight;          //+66
   unsigned char window_state;//+70
   char reserved3[1024-71];   //+71
-}ksys_proc_table;
+}ksys_proc_table_t;
 
-typedef unsigned int color_t;
+typedef unsigned int ksys_color_t;
 
-struct ksys_colors {
-    color_t frame_area;
-    color_t grab_bar;
-    color_t grab_bar_button; 
-    color_t grab_button_text;
-    color_t grab_text;
-    color_t work_area;
-    color_t work_button;
-    color_t work_button_text;
-    color_t work_text;
-    color_t work_graph;
-};
+typedef struct{
+    ksys_color_t frame_area;
+    ksys_color_t grab_bar;
+    ksys_color_t grab_bar_button; 
+    ksys_color_t grab_button_text;
+    ksys_color_t grab_text;
+    ksys_color_t work_area;
+    ksys_color_t work_button;
+    ksys_color_t work_button_text;
+    ksys_color_t work_text;
+    ksys_color_t work_graph;
+}ksys_colors_table_t;
 
-struct ipc_message{
+typedef struct{
     unsigned pid;      // PID of sending thread
     unsigned datalen;  // data bytes
     char     *data;    // data begin
-};
+}ksys_ipc_msg;
  
-struct ipc_buffer{
+typedef struct{
     unsigned lock;              // nonzero is locked
     unsigned used;              // used bytes in buffer
-    struct ipc_message *data;   // data begin
-};
+    struct ksys_ipc_msg *data;   // data begin
+}ksys_ipc_buffer;
 
 typedef struct {
     char* func_name;
     void* func_ptr;
-}coff_export_table;
+}ksys_coff_etable_t;
 
 #pragma pack(pop)
 
@@ -130,6 +128,23 @@ enum KSYS_EVENTS {
     KSYS_EVENT_IRQBEGIN = 16 /* 16..31 IRQ0..IRQ15 interrupt =IRQBEGIN+IRQn */
 };
 
+enum KSYS_FILE_ENCODING{
+    KSYS_FILE_CP866 =1,
+    KSYS_FILE_UTF16LE = 2,
+    KSYS_FILE_UTF8 = 3
+};
+
+enum KSYS_CLIP_ENCODING{
+    KSYS_CLIP_UTF8 = 0,
+    KSYS_CLIP_CP866 = 1,
+    KSYS_CLIP_CP1251 = 2
+};
+
+enum KSYS_CLIP_TYPES{
+    KSYS_CLIP_TEXT = 0,
+    KSYS_CLIP_IMAGE = 1,
+    KSYS_CLIP_RAW = 2
+};
 
 // Functions for working with the graphical interface
 
@@ -146,7 +161,7 @@ void _ksys_end_draw()
 }
 
 static inline 
-void _ksys_create_window(int x, int y, int w, int h, const char *name, color_t workcolor, unsigned style)
+void _ksys_create_window(int x, int y, int w, int h, const char *name, ksys_color_t workcolor, unsigned style)
 {
     asm_inline(
         "int $0x40"
@@ -169,7 +184,7 @@ void _ksys_change_window(int new_x, int new_y, int new_w, int new_h)
 }
  
 static inline
-void _ksys_define_button(unsigned x, unsigned y, unsigned w, unsigned h, unsigned id, color_t color)
+void _ksys_define_button(unsigned x, unsigned y, unsigned w, unsigned h, unsigned id, ksys_color_t color)
 {
    asm_inline(
         "int $0x40"
@@ -182,7 +197,7 @@ void _ksys_define_button(unsigned x, unsigned y, unsigned w, unsigned h, unsigne
 };
 
 static inline
-void _ksys_draw_line(int xs, int ys, int xe, int ye, color_t color)
+void _ksys_draw_line(int xs, int ys, int xe, int ye, ksys_color_t color)
 {
     asm_inline(
         "int $0x40"
@@ -193,7 +208,7 @@ void _ksys_draw_line(int xs, int ys, int xe, int ye, color_t color)
 }
 
 static inline
-void _ksys_draw_bar(int x, int y, int w, int h, color_t color)
+void _ksys_draw_bar(int x, int y, int w, int h, ksys_color_t color)
 {
     asm_inline(
         "int $0x40"
@@ -215,7 +230,7 @@ void _ksys_draw_bitmap(void *bitmap, int x, int y, int w, int h)
 }
 
 static inline
-void _ksys_draw_text(const char *text, int x, int y, int len, color_t color)
+void _ksys_draw_text(const char *text, int x, int y, int len, ksys_color_t color)
 {
    asm_inline(
         "int $0x40"
@@ -227,7 +242,7 @@ void _ksys_draw_text(const char *text, int x, int y, int len, color_t color)
 }
 
 static inline
-void _ksys_draw_text_bg(const char *text, int x, int y, int len, color_t color, color_t bg)
+void _ksys_draw_text_bg(const char *text, int x, int y, int len, ksys_color_t color, ksys_color_t bg)
 {
     asm_inline(
         "int $0x40"
@@ -239,7 +254,7 @@ void _ksys_draw_text_bg(const char *text, int x, int y, int len, color_t color, 
 }
 
 static inline 
-void _ksys_draw_number(int number, int x, int y, int len, color_t color){
+void _ksys_draw_number(int number, int x, int y, int len, ksys_color_t color){
     unsigned fmt;
     fmt = len << 16 | 0x80000000; // no leading zeros + width
     asm_inline(
@@ -249,7 +264,7 @@ void _ksys_draw_number(int number, int x, int y, int len, color_t color){
 }
  
 static inline 
-void _ksys_draw_number_bg(unsigned number, int x, int y, int len, color_t color, color_t bg){
+void _ksys_draw_number_bg(unsigned number, int x, int y, int len, ksys_color_t color, ksys_color_t bg){
     unsigned fmt;
     fmt = len << 16 | 0x80000000; // no leading zeros + width
     asm_inline(
@@ -271,7 +286,7 @@ unsigned _ksys_get_skin_height()
 }
 
 static inline 
-void _ksys_get_colors(struct ksys_colors *color_table)
+void _ksys_get_colors(ksys_colors_table_t *color_table)
 {
     asm_inline(
        "int $0x40"
@@ -283,9 +298,9 @@ void _ksys_get_colors(struct ksys_colors *color_table)
 /* Functions for working with a mouse and cursors. */
 
 static inline
-pos_t _ksys_get_mouse_pos(int origin)
+ksys_pos_t _ksys_get_mouse_pos(int origin)
 {
-    pos_t val;
+    ksys_pos_t val;
     asm_inline(
         "int $0x40 \n\t"
         "rol $16, %%eax"
@@ -590,16 +605,19 @@ int* _ksys_unmap(void *base, size_t offset, size_t size)
 /* Loading the dynamic coff library */
 
 static inline
-coff_export_table* not_optimized _ksys_cofflib_load(const char* path)
+ksys_coff_etable_t* not_optimized _ksys_cofflib_load(const char* path)
 {
+    ksys_coff_etable_t *table;
     asm_inline(
         "int $0x40"
-        ::"a"(68),"b"(19), "c"(path)
+        :"=a"(table)
+        :"a"(68),"b"(19), "c"(path)
     );
+    return table;
 }
 
 static inline
-void* not_optimized _ksys_cofflib_getproc(coff_export_table *table, const char* fun_name)
+void* not_optimized _ksys_cofflib_getproc(ksys_coff_etable_t *table, const char* fun_name)
 {
     unsigned i=0;
     while (1){
@@ -669,7 +687,7 @@ int _ksys_get_thread_slot(int tid){
 }
 
 static inline 
-int not_optimized _ksys_process_info(ksys_proc_table* table, int pid)
+int not_optimized _ksys_process_info(ksys_proc_table_t* table, int pid)
 {
     int val;
     asm_inline(
@@ -708,19 +726,31 @@ int _ksys_getcwd(char* buf, int bufsize){
 }
 
 static inline 
-ufile_t _ksys_load_file(const char *path)
+ksys_ufile_t _ksys_load_file(const char *path)
 {
-    ufile_t uf;
+    ksys_ufile_t uf;
     asm_inline(
         "int $0x40"
-        :"=a"(uf.raw)
-        :"a" (68), "b"(27),"c"(path)
+        :"=a"(uf.data), "=d"(uf.size)
+        :"a"(68), "b"(27),"c"(path)
+    );
+    return uf;
+}
+
+static inline 
+ksys_ufile_t _ksys_load_file_enc(const char *path, unsigned file_encoding)
+{
+    ksys_ufile_t uf;
+    asm_inline(
+        "int $0x40"
+        :"=a"(uf.data), "=d"(uf.size)
+        :"a"(68), "b"(28),"c"(path), "d"(file_encoding)
     );
     return uf;
 }
 
 static inline
-int not_optimized _ksys_work_files(ksys70_struct *k)
+int not_optimized _ksys_work_files(ksys70_t *k)
 {
     int status;
     asm_inline(
