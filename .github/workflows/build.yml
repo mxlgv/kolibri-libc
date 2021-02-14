@@ -2,9 +2,9 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ main, feat/stdio-exp ]
+    branches: [ main, feat/stdio-fs ]
   pull_request:
-    branches: [ main, feat/stdio-exp ]
+    branches: [ main, feat/stdio-fs ]
 
 jobs:
   build:
