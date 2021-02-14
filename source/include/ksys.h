@@ -803,6 +803,29 @@ int not_optimized _ksys_file_read_file(char *name, unsigned long long offset, un
 }
 
 static inline
+int not_optimized _ksys_file_write_file(char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_written)
+{
+    ksys70_t k;
+    k.p00 = 3;
+    k.p04 = offset;
+    k.p12 = size;
+    k.buf16 = buf;
+    k.p20 = 0;
+    k.p21 = name;
+    int status;
+    unsigned bytes_written_v;
+    asm_inline(
+        "int $0x40"
+        :"=a"(status), "=b"(bytes_written_v)
+        :"a"(70), "b"(&k)
+    );
+    if (!status) {
+        *bytes_written = bytes_written_v;
+    }
+    return status;
+}
+
+static inline
 int not_optimized _ksys_file_get_info(char *name, BDFE_struct *bdfe)
 {
     ksys70_t k;
