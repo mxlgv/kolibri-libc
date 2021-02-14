@@ -103,5 +103,6 @@ int      vscanf(const char *restrict, va_list);
 
 int      remove(const char *);
 int      rename(const char *, const char *);
+char    *tmpnam(char *);
 
 #endif  // _STDIO_H_
