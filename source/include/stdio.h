@@ -47,7 +47,7 @@ void debug_printf(const char* format, ...);
 
 typedef size_t fpos_t;
 
-struct FILE_s {
+typedef struct FILE_s {
     char *name;
     fpos_t position;
     int error;
