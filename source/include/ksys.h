@@ -26,7 +26,7 @@ typedef union{
     };
 }ksys_pos_t;
 
-typedef union oskey_t{
+typedef union ksys_oskey_t{
     unsigned val;
     struct{
         unsigned char state;
@@ -76,7 +76,7 @@ typedef struct {
     char last_modification_date[4];
     unsigned long long size;
     char name[0];
-} BDFE_struct;
+}ksys_bdfe_t;
 
 typedef struct {
   int cpu_usage;             //+0
@@ -827,7 +827,7 @@ int not_optimized _ksys_file_write_file(const char *name, unsigned long long off
 }
 
 static inline
-int not_optimized _ksys_file_get_info(const char *name, BDFE_struct *bdfe)
+int not_optimized _ksys_file_get_info(const char *name, ksys_bdfe_t *bdfe)
 {
     ksys70_t k;
     k.p00 = 5;
