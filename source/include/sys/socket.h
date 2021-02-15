@@ -2,6 +2,7 @@
 #define _SOCKET_H_
 
 #include <stddef.h>
+#include <ksys.h>
 #include <errno.h>
 
 // Socket Types
