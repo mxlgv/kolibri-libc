@@ -7,7 +7,7 @@ int fseek(FILE *stream, long int offset, int whence) {
 	} else if (whence == SEEK_CUR) {
 		stream->position += offset;
 	} else if (whence == SEEK_END) {
-		BDFE_struct info;
+		ksys_bdfe_t info;
 	    if (_ksys_file_get_info(stream->name, &info)) {
 	        return -1;
 	    }
