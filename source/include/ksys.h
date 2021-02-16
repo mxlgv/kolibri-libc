@@ -768,7 +768,7 @@ ksys_ufile_t _ksys_load_file_enc(const char *path, unsigned file_encoding)
 }
 
 static inline
-int not_optimized _ksys_work_files(ksys70_t *k)
+int not_optimized _ksys_work_files(const ksys70_t *k)
 {
     int status;
     asm_inline(
@@ -780,7 +780,7 @@ int not_optimized _ksys_work_files(ksys70_t *k)
 }
 
 static inline
-int not_optimized _ksys_file_read_file(char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_read)
+int not_optimized _ksys_file_read_file(const char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_read)
 {
     ksys70_t k;
     k.p00 = 0;
@@ -803,7 +803,7 @@ int not_optimized _ksys_file_read_file(char *name, unsigned long long offset, un
 }
 
 static inline
-int not_optimized _ksys_file_write_file(char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_written)
+int not_optimized _ksys_file_write_file(const char *name, unsigned long long offset, unsigned size, const void *buf, unsigned *bytes_written)
 {
     ksys70_t k;
     k.p00 = 3;
@@ -826,7 +826,7 @@ int not_optimized _ksys_file_write_file(char *name, unsigned long long offset, u
 }
 
 static inline
-int not_optimized _ksys_file_get_info(char *name, BDFE_struct *bdfe)
+int not_optimized _ksys_file_get_info(const char *name, BDFE_struct *bdfe)
 {
     ksys70_t k;
     k.p00 = 5;
@@ -837,7 +837,7 @@ int not_optimized _ksys_file_get_info(char *name, BDFE_struct *bdfe)
 }
 
 static inline
-int not_optimized _ksys_file_delete(char *name)
+int not_optimized _ksys_file_delete(const char *name)
 {
     ksys70_t k;
     k.p00 = 8;
@@ -847,7 +847,7 @@ int not_optimized _ksys_file_delete(char *name)
 }
 
 static inline
-int not_optimized _ksys_file_rename(char *name, char *new_name)
+int not_optimized _ksys_file_rename(const char *name, const char *new_name)
 {
     ksys70_t k;
     k.p00 = 10;

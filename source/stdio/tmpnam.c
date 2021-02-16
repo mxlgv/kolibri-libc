@@ -2,7 +2,7 @@
 #include <ksys.h>
 #include <string.h>
 
-static buf[FILENAME_MAX + 1];
+static char buf[FILENAME_MAX + 1];
 static int static_index = 0;
 
 char *tmpnam(char *name) {
