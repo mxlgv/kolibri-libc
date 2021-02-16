@@ -56,12 +56,13 @@ typedef struct{
     unsigned            p12;
     union {
         unsigned        p16;
-        char           *new_name;
+        const char     *new_name;
         void           *bdfe;
         void           *buf16;
+        const void     *cbuf16;
     };
     char                p20;
-    char               *p21;
+    const char         *p21;
 }ksys70_t;
 
 typedef struct {
@@ -809,7 +810,7 @@ int not_optimized _ksys_file_write_file(const char *name, unsigned long long off
     k.p00 = 3;
     k.p04 = offset;
     k.p12 = size;
-    k.buf16 = buf;
+    k.cbuf16 = buf;
     k.p20 = 0;
     k.p21 = name;
     int status;
