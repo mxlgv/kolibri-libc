@@ -26,7 +26,7 @@ typedef union{
     };
 }ksys_pos_t;
 
-typedef union oskey_t{
+typedef union ksys_oskey_t{
     unsigned val;
     struct{
         unsigned char state;
@@ -52,7 +52,13 @@ typedef struct{
  
 typedef struct{
     unsigned            p00;
-    unsigned long long  p04;
+    union{
+        uint64_t        p04; 
+        struct {
+            unsigned    p04dw;
+            unsigned    p08dw;
+        };
+    };
     unsigned            p12;
     union {
         unsigned        p16;
@@ -65,6 +71,7 @@ typedef struct{
     const char         *p21;
 }ksys70_t;
 
+
 typedef struct {
     unsigned attributes;
     unsigned name_cp;
@@ -76,7 +83,7 @@ typedef struct {
     char last_modification_date[4];
     unsigned long long size;
     char name[0];
-} BDFE_struct;
+}ksys_bdfe_t;
 
 typedef struct {
   int cpu_usage;             //+0
@@ -403,7 +410,7 @@ unsigned _ksys_get_mouse_eventstate()
 }
 
 
-/* Functions for working with events. */
+/* Functions for working with events and buttons. */
 
 static inline
 unsigned _ksys_set_event_mask(unsigned mask)
@@ -453,6 +460,29 @@ unsigned _ksys_get_event()
     return val;
 }
 
+static inline
+unsigned _ksys_get_button()
+{
+    unsigned val;
+    asm_inline(
+        "int $0x40"
+        :"=a"(val)
+        :"a"(17)
+    );
+    return val>>8;
+}
+ 
+static inline 
+ksys_oskey_t _ksys_get_key(void)
+{
+    ksys_oskey_t val;
+    asm_inline(
+        "int $0x40"
+        :"=a"(val)
+        :"a"(2)
+    );
+    return val;
+}
 
 /* Functions for working with the clipboard */
 
@@ -827,7 +857,7 @@ int not_optimized _ksys_file_write_file(const char *name, unsigned long long off
 }
 
 static inline
-int not_optimized _ksys_file_get_info(const char *name, BDFE_struct *bdfe)
+int not_optimized _ksys_file_get_info(const char *name, ksys_bdfe_t *bdfe)
 {
     ksys70_t k;
     k.p00 = 5;
@@ -856,6 +886,23 @@ int not_optimized _ksys_file_rename(const char *name, const char *new_name)
     k.p20 = 0;
     k.p21 = name;
     return _ksys_work_files(&k);
+}
+
+
+static inline
+int not_optimized _ksys_exec(char *app_name, char *args){
+    ksys70_t file_op;
+    file_op.p00 = 7;
+    file_op.p04dw = 0;
+    file_op.p08dw = (unsigned)args;
+    file_op.p21 = app_name;
+    register int val;
+    asm_inline(
+        "int $0x40"
+        :"=a"(val)
+        :"a"(70), "b"(&file_op)
+    );
+    return val;
 }
 
 #endif // _KSYS_H_
