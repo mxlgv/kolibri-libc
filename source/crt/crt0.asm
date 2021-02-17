@@ -5,9 +5,9 @@ public start as '_start'
 ;extrn mf_init
 extrn main
 ;include 'debug2.inc'
-include '..\..\..\..\..\proc32.inc'
-include '..\..\..\..\..\macros.inc'
-include '..\..\..\..\..\dll.inc'
+include 'inc/proc32.inc'
+include 'inc/macros.inc'
+include 'inc/dll.inc'
 __DEBUG__=0
 
 ;start_:
