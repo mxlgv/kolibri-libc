@@ -12,7 +12,7 @@ all: $(NAME)
 
 $(NAME): $(SRC)
 	$(CC) $(CFLAGS) $(SRC)
-	$(LD) $(LDFLAGS) $(NAME).o -o $(NAME) -lc -lm
+	$(LD) $(LDFLAGS) $(NAME).o -o $(NAME) -lc
 	strip -s $(NAME) -o $(NAME)
 	objcopy $(NAME) -O binary
 	$(KPACK) $(NAME) 

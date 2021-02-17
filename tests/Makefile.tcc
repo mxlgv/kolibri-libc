@@ -9,7 +9,7 @@ CFLAGS = -I ../source/include -stack=1048576  # set stack size 1Mb
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(KTCC) $(CFLAGS) $(SRC) -o $(NAME) -lc -lm 
+	$(KTCC) $(CFLAGS) $(SRC) -o $(NAME) -lc
 	$(KPACK) $(NAME)
 
 clean:
