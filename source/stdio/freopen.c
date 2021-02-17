@@ -10,7 +10,7 @@ static char *strdup(const char *str) {
 
 FILE *freopen(const char *restrict _name, const char *restrict _mode, FILE *restrict out) {
     ksys_bdfe_t info;
-    if (_ksys_file_get_info((char*)_name, &info)) {
+    if (_ksys_file_get_info(_name, &info)) {
         return NULL;
     }
 
