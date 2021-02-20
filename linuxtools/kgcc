@@ -1,0 +1,6 @@
+# Copyright maxcodehack, 2021
+# gcc options for build for KolibriOS
+FLAGS="-m32 -fno-builtin -ffreestanding -nostdinc -fno-common -fno-pie -fno-stack-protector"
+
+# And, execute it:
+gcc $FLAGS $*

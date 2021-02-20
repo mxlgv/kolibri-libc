@@ -1,0 +1,6 @@
+# Copyright maxcodehack, 2021
+# ld options for build for KolibriOS
+FLAGS="-m elf_i386 -nostdlib"
+
+# And, execute it:
+ld $FLAGS $*
