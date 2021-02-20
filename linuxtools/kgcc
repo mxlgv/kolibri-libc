@@ -1,6 +1,17 @@
+#!/bin/bash
+
 # Copyright maxcodehack, 2021
 # gcc options for build for KolibriOS
-FLAGS="-m32 -fno-builtin -ffreestanding -nostdinc -fno-common -fno-pie -fno-stack-protector"
 
-# And, execute it:
-gcc $FLAGS $*
+# KLIBC variable exists?
+if [ -z "$KLIBC" ]
+then
+	echo -e "\033[1;31mfatal error: \033[0mKLIBC variable not set"
+	exit 1
+fi
+
+# GCC Flags for KolibriOS
+FLAGS="-c -m32 -fno-builtin -ffreestanding -nostdinc -fno-common -fno-pie -fno-stack-protector"
+
+# And, execute gcc:
+gcc $FLAGS -I $KLIBC/source/include $*

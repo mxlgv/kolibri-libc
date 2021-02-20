@@ -2,16 +2,14 @@ CC = ../linuxtools/kgcc
 LD = ../linuxtools/kld
 
 SRC = $(NAME).c
-CFLAGS = -c -I ../source/include -Os
-LDFLAGS = -T static.lds ../bin/lib/crt0.o -L ../bin/lib 
 
 .PHONY: all
 
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(CC) $(CFLAGS) $(SRC)
-	$(LD) $(LDFLAGS) $(NAME).o -o $(NAME) -lc
+	$(CC) -O2 $(SRC)
+	$(LD) $(NAME).o -o $(NAME) -lc
 	strip -s $(NAME) -o $(NAME)
 	objcopy $(NAME) -O binary
 
