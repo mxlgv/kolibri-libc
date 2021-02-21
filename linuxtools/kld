@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Copyright maxcodehack, 2021
+# ld options for build for KolibriOS
+
+# KLIBC variable exists?
+if [ -z "$KLIBC" ]
+then
+	echo -e "\033[1;31mfatal error: \033[0mKLIBC variable not set"
+	exit 1
+fi
+
+# LD Flags for KolibriOS
+FLAGS="-m elf_i386 -nostdlib"
+
+# And, execute ld:
+ld $FLAGS -L $KLIBC/bin/lib -T $KLIBC/tests/static.lds $KLIBC/bin/lib/crt0.o $*
