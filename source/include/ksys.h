@@ -131,7 +131,7 @@ typedef struct{
 typedef struct{
     unsigned lock;              // nonzero is locked
     unsigned used;              // used bytes in buffer
-    struct ksys_ipc_msg *data;   // data begin
+    ksys_ipc_msg *data;         // data begin
 }ksys_ipc_buffer;
 
 typedef struct {
