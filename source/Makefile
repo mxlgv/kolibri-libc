@@ -30,7 +30,7 @@ endif
 all: $(cfiles) $(asmfiles) $(LIB_DIR) $(LIBC.A) $(LIBC.OBJ)
 	fasm crt/crt0.asm $(LIB_DIR)/crt0.o
 
-$(LIBNAME): $(cfiles) $(asmfiles)
+$(LIBC.A): $(cfiles) $(asmfiles)
 	$(AR) $(LIBC.A) $^
 
 $(LIBC.OBJ): $(cfiles) $(asmfiles)
