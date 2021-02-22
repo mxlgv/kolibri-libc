@@ -1,4 +1,4 @@
-#include<libc/asm.h>
+#include "libc/asm.h"
 /* Copyright (C) 1994 DJ Delorie, see COPYING.DJ for details */
 	.data
 LCW1:

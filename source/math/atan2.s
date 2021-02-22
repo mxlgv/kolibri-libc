@@ -1,5 +1,5 @@
 /* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
-#include<libc/asm.h>
+#include "libc/asm.h"
 
 .data
 	.align	2

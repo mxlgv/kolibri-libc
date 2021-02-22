@@ -23,6 +23,8 @@ extern "C" {
 
 /* Copying functions */
 
+void *memccpy(void *restrict dest, const void *restrict src, int c, size_t n);
+
 /* Copy a number of n characters from the memory area pointed to by s2 to the
    area pointed to by s1. If the two areas overlap, behaviour is undefined.
    Returns the value of s1.
