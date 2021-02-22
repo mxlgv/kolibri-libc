@@ -45,6 +45,11 @@ clean:
 	$(RM) $(cfiles) $(asmfiles)
 	$(RM) $(LIBNAME)
 
+shared: $(cfiles) $(asmfiles)
+	$(CLINK) $^
+	$(KPACK) a.out.obj
+	mv a.out.obj $(LIBC.OBJ)
+
 test:
 	make -C ../test -f Makefile.tcc
 	kex ../test/test
