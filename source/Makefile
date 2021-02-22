@@ -27,16 +27,11 @@ RM = rm -rf
 MKDIR_P = mkdir -p
 endif
 
-all: $(cfiles) $(asmfiles) $(LIB_DIR) $(LIBC.A) $(LIBC.OBJ)
+all: $(cfiles) $(asmfiles) $(LIB_DIR) $(LIBC.A)
 	fasm crt/crt0.asm $(LIB_DIR)/crt0.o
 
 $(LIBC.A): $(cfiles) $(asmfiles)
 	$(AR) $(LIBC.A) $^
-
-$(LIBC.OBJ): $(cfiles) $(asmfiles)
-	$(CLINK) $^
-	$(KPACK) a.out.obj
-	mv a.out.obj $(LIBC.OBJ)
 
 $(LIB_DIR):
 	$(MKDIR_P) $(LIB_DIR)
