@@ -32,7 +32,7 @@ $(LIB_DIR):
 
 $(asmfiles):
 	$(CPP) -nostdinc -Imath $*.s > $*.sx
-	kos32-as --32 $*.sx -o $*.o
+	$(AS) --32 $*.sx -o $*.o
 	$(RM) $*.sx
 
 clean:
