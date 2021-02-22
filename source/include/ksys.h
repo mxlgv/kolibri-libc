@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 #include <stddef.h>
-#include <string.h>
 
 #define asm_inline __asm__ __volatile__
 #define not_optimized __attribute__((optimize("O0")))
@@ -171,6 +170,17 @@ enum KSYS_CLIP_TYPES{
     KSYS_CLIP_IMAGE = 1,
     KSYS_CLIP_RAW = 2
 };
+
+static inline 
+int _ksys_strcmp(const char * s1, const char * s2 )
+{
+    while ((*s1) && (*s1 == *s2)){
+        ++s1;
+        ++s2;
+    }
+
+    return ( *( unsigned char * )s1 - * ( unsigned char * )s2 );
+}
 
 // Functions for working with the graphical interface
 
@@ -673,7 +683,7 @@ void* not_optimized _ksys_cofflib_getproc(ksys_coff_etable_t *table, const char*
         if (NULL == (table+i)->func_name){
             break;
         }else{
-            if (!strcmp(fun_name, (table+i)->func_name)){
+            if (!_ksys_strcmp(fun_name, (table+i)->func_name)){
                 return (table+i)->func_ptr;
             }
         }
