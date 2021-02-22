@@ -4,7 +4,6 @@
 #define C_SYM(x) x
 // #define C_SYM(x)	_##x
 
-#define MK_C_SYM(x)	C_SYM(x) : ; \
-			.globl C_SYM(x)
+#define MK_C_SYM(x)	.global C_SYM(x); C_SYM(x):
 
 #endif

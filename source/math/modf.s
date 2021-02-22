@@ -1,6 +1,6 @@
 /* Copyright (C) 1994 DJ Delorie, see COPYING.DJ for details */
 	.text
-#include<libc/asm.h>
+#include "libc/asm.h"
 MK_C_SYM(modf)
 	pushl	%ebp
 	movl	%esp,%ebp

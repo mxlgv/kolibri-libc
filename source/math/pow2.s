@@ -1,5 +1,5 @@
 /* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
-#include<libc/asm.h>
+#include "libc/asm.h"
 	.data
 LCW1:
 	.word	0
@@ -11,6 +11,7 @@ LC0:
 	.text
 
 MK_C_SYM(__pow2)
+MK_C_SYM(pow2)
 	fldl	4(%esp)
 	fstcw	LCW1
 	fstcw	LCW2
