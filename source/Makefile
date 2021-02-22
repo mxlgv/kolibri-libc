@@ -1,7 +1,13 @@
 AR = ar -rcs
+CLINK = ../bin/clink
+KPACK = ../bin/kpack
+
 INCLUDE = include
 LIB_DIR = ../bin/lib
-LIBNAME = $(LIB_DIR)/libc.a
+
+LIBC.A = $(LIB_DIR)/libc.a
+LIBC.OBJ = $(LIB_DIR)/libc.obj
+
 CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC -Os -fno-common -fno-builtin -fno-leading-underscore -fno-pie
 DIRS :=  string stdlib stdio sys math ctype exports
 
@@ -21,11 +27,16 @@ RM = rm -rf
 MKDIR_P = mkdir -p
 endif
 
-all: $(cfiles) $(asmfiles) $(LIB_DIR) $(LIBNAME)
-	fasm crt/crt0.asm ../bin/lib/crt0.o
+all: $(cfiles) $(asmfiles) $(LIB_DIR) $(LIBC.A) $(LIBC.OBJ)
+	fasm crt/crt0.asm $(LIB_DIR)/crt0.o
 
 $(LIBNAME): $(cfiles) $(asmfiles)
-	$(AR) $(LIBNAME) $^
+	$(AR) $(LIBC.A) $^
+
+$(LIBC.OBJ): $(cfiles) $(asmfiles)
+	$(CLINK) $^
+	$(KPACK) a.out.obj
+	mv a.out.obj $(LIBC.OBJ)
 
 $(LIB_DIR):
 	$(MKDIR_P) $(LIB_DIR)
@@ -42,4 +53,3 @@ clean:
 test:
 	make -C ../test -f Makefile.tcc
 	kex ../test/test
-	
