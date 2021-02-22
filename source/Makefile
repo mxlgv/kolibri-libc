@@ -2,8 +2,8 @@ AR = ar -rcs
 INCLUDE = include
 LIB_DIR = ../bin/lib
 LIBNAME = $(LIB_DIR)/libc.a
-CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC -Os -fno-common -fno-builtin -fno-pie
-DIRS :=  string stdlib stdio sys math
+CFLAGS = -I$(INCLUDE) -m32 -nostdinc -nostdlib -DGNUC -Os -fno-common -fno-builtin -fno-leading-underscore -fno-pie
+DIRS :=  string stdlib stdio sys math ctype
 
 cfiles := $(foreach dir,$(DIRS),$(patsubst %.c, %.o, $(wildcard $(dir)/*.c)))
 asmfiles := $(foreach dir,$(DIRS),$(patsubst %.s, %.o, $(wildcard $(dir)/*.s)))
@@ -31,9 +31,9 @@ $(LIB_DIR):
 	$(MKDIR_P) $(LIB_DIR)
 
 $(asmfiles):
-	cpp -nostdinc -Imath $*.s -o $*.sx
-	as --32 $*.sx -o $*.o
-	rm $*.sx
+	kos32-cpp -nostdinc -Imath $*.s -o $*.sx
+	kos32-as --32 $*.sx -o $*.o
+	$(RM) $*.sx
 
 clean:
 	$(RM) $(cfiles) $(asmfiles)
