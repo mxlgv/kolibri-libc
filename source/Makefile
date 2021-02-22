@@ -31,8 +31,8 @@ $(LIB_DIR):
 	$(MKDIR_P) $(LIB_DIR)
 
 $(asmfiles):
-	kos32-cpp -nostdinc -Imath $*.s -o $*.sx
-	kos32-as --32 $*.sx -o $*.o
+	$(CPP) -nostdinc -Imath $*.s > $*.sx
+	$(AS) --32 $*.sx -o $*.o
 	$(RM) $*.sx
 
 clean:
