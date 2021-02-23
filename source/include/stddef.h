@@ -23,7 +23,13 @@ typedef uint64_t uintmax_t;
 #endif
 
 #ifndef NULL
-#define NULL ((void*)0)
+    #define NULL ((void*)0)
+#endif
+
+#ifdef _DYNAMIC
+    #define _FUNC(func) (*func)
+#else
+    #define _FUNC(func) func
 #endif
 
 #define offsetof(type, field) ((size_t)&((type *)0)->field)

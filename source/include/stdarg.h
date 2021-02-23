@@ -1,5 +1,7 @@
-#ifndef _STDARG_H
-#define _STDARG_H
+#ifndef _STDARG_H_
+#define _STDARG_H_
+
+#include <stddef.h>
 
 #ifdef __x86_64__
 #ifndef _WIN64
@@ -18,8 +20,8 @@ typedef struct {
 
 typedef __va_list_struct va_list[1];
 
-void __va_start(__va_list_struct *ap, void *fp);
-void *__va_arg(__va_list_struct *ap, int arg_type, int size, int align);
+void  _FUNC(__va_start)(__va_list_struct *ap, void *fp);
+void* _FUNC(__va_arg)(__va_list_struct *ap, int arg_type, int size, int align);
 
 #define va_start(ap, last) __va_start(ap, __builtin_frame_address(0))
 #define va_arg(ap, type)                                                \

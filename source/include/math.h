@@ -4,6 +4,8 @@
 #ifndef _MATH_H_
 #define _MATH_H_
 
+#include <stddef.h>
+
 #ifdef _USE_LIBM_MATH_H
 #include <libm/math.h>
 #else
@@ -17,34 +19,34 @@ extern "C" {
 extern double __dj_huge_val;
 #define HUGE_VAL  __dj_huge_val
 
-double	acos(double _x);
-double	asin(double _x);
-double	atan(double _x);
-double	atan2(double _y, double _x);
-double	ceil(double _x);
-double	cos(double _x);
-double	cosh(double _x);
-double	exp(double _x);
-double	fabs(double _x);
-double	floor(double _x);
-double	fmod(double _x, double _y);
-double	frexp(double _x, int *_pexp);
-double	ldexp(double _x, int _exp);
-double	log(double _y);
-double	log10(double _x);
-double	modf(double _x, double *_pint);
-double	pow(double _x, double _y);
-double	sin(double _x);
-double	sinh(double _x);
-double	sqrt(double _x);
-double	tan(double _x);
-double	tanh(double _x);
+double	_FUNC(acos)(double _x);
+double	_FUNC(asin)(double _x);
+double	_FUNC(atan)(double _x);
+double	_FUNC(atan2)(double _y, double _x);
+double	_FUNC(ceil)(double _x);
+double	_FUNC(cos)(double _x);
+double	_FUNC(cosh)(double _x);
+double	_FUNC(exp)(double _x);
+double	_FUNC(fabs)(double _x);
+double	_FUNC(floor)(double _x);
+double	_FUNC(fmod)(double _x, double _y);
+double	_FUNC(frexp)(double _x, int *_pexp);
+double	_FUNC(ldexp)(double _x, int _exp);
+double	_FUNC(log)(double _y);
+double	_FUNC(log10)(double _x);
+double	_FUNC(modf)(double _x, double *_pint);
+double	_FUNC(pow)(double _x, double _y);
+double	_FUNC(sin)(double _x);
+double	_FUNC(sinh)(double _x);
+double	_FUNC(sqrt)(double _x);
+double	_FUNC(tan)(double _x);
+double	_FUNC(tanh)(double _x);
   
 #ifndef __STRICT_ANSI__
 
 #ifndef _POSIX_SOURCE
 
-#define M_E		2.7182818284590452354
+#define M_E		    2.7182818284590452354
 #define M_LOG2E		1.4426950408889634074
 #define M_LOG10E	0.43429448190325182765
 #define M_LN2		0.69314718055994530942
@@ -60,21 +62,21 @@ double	tanh(double _x);
 #define PI		M_PI
 #define PI2		M_PI_2
 
-double	acosh(double);
-double	asinh(double);
-double	atanh(double);
-double	cbrt(double);
-double	exp10(double _x);
-double	exp2(double _x);
-double	expm1(double);
-double	hypot(double, double);
-double	log1p(double);
-double	log2(double _x);
-long double modfl(long double _x, long double *_pint);
-double	pow10(double _x);
-double	pow2(double _x);
-double	powi(double, int);
-void	sincos(double, double *, double *);
+double	_FUNC(acosh)(double);
+double	_FUNC(asinh)(double);
+double	_FUNC(atanh)(double);
+double	_FUNC(cbrt)(double);
+double	_FUNC(exp10)(double _x);
+double	_FUNC(exp2)(double _x);
+double	_FUNC(expm1)(double);
+double	_FUNC(hypot)(double, double);
+double	_FUNC(log1p)(double);
+double	_FUNC(log2)(double _x);
+long double _FUNC(modfl)(long double _x, long double *_pint);
+double	_FUNC(pow10)(double _x);
+double	_FUNC(pow2)(double _x);
+double	_FUNC(powi)(double, int);
+void	_FUNC(sincos)(double, double *, double *);
 
 /* These are in libm.a (Cygnus).  You must link -lm to get these */
 /* See libm/math.h for comments */
@@ -90,90 +92,90 @@ struct exception {
 };
 #endif
 
-extern double erf(double);
-extern double erfc(double);
-extern double gamma(double);
-extern int isinf(double);
-extern int isnan(double);
-extern int finite(double);
-extern double j0(double);
-extern double j1(double);
-extern double jn(int, double);
-extern double lgamma(double);
-extern double nan(const char*);
-extern double y0(double);
-extern double y1(double);
-extern double yn(int, double);
-extern double logb(double);
-extern double nextafter(double, double);
-extern double remainder(double, double);
-extern double scalb(double, double);
+extern double _FUNC(erf)(double);
+extern double _FUNC(erfc)(double);
+extern double _FUNC(gamma)(double);
+extern int    _FUNC(isinf)(double);
+extern int    _FUNC(isnan)(double);
+extern int    _FUNC(finite)(double);
+extern double _FUNC(j0)(double);
+extern double _FUNC(j1)(double);
+extern double _FUNC(jn)(int, double);
+extern double _FUNC(lgamma)(double);
+extern double _FUNC(nan)(const char*);
+extern double _FUNC(y0)(double);
+extern double _FUNC(y1)(double);
+extern double _FUNC(yn)(int, double);
+extern double _FUNC(logb)(double);
+extern double _FUNC(nextafter)(double, double);
+extern double _FUNC(remainder)(double, double);
+extern double _FUNC(scalb)(double, double);
 #ifndef __cplusplus
-extern int matherr(struct exception *);
+extern int _FUNC(matherr)(struct exception *);
 #endif
-extern double significand(double);
-extern double copysign(double, double);
-extern int ilogb(double);
-extern double rint(double);
-extern double scalbn(double, int);
-extern double drem(double, double);
-extern double gamma_r(double, int *);
-extern double lgamma_r(double, int *);
-extern float acosf(float);
-extern float asinf(float);
-extern float atanf(float);
-extern float atan2f(float, float);
-extern float cosf(float);
-extern float sinf(float);
-extern float tanf(float);
-extern float coshf(float);
-extern float sinhf(float);
-extern float tanhf(float);
-extern float expf(float);
-extern float frexpf(float, int *);
-extern float ldexpf(float, int);
-extern float logf(float);
-extern float log10f(float);
-extern float modff(float, float *);
-extern float powf(float, float);
-extern float sqrtf(float);
-extern float ceilf(float);
-extern float fabsf(float);
-extern float floorf(float);
-extern float fmodf(float, float);
-extern float erff(float);
-extern float erfcf(float);
-extern float gammaf(float);
-extern float hypotf(float, float);
-extern int isinff(float);
-extern int isnanf(float);
-extern int finitef(float);
-extern float j0f(float);
-extern float j1f(float);
-extern float jnf(int, float);
-extern float lgammaf(float);
-extern float nanf(const char*);
-extern float y0f(float);
-extern float y1f(float);
-extern float ynf(int, float);
-extern float acoshf(float);
-extern float asinhf(float);
-extern float atanhf(float);
-extern float cbrtf(float);
-extern float logbf(float);
-extern float nextafterf(float, float);
-extern float remainderf(float, float);
-extern float scalbf(float, float);
-extern float significandf(float);
-extern float copysignf(float, float);
-extern int ilogbf(float);
-extern float rintf(float);
-extern float scalbnf(float, int);
-extern float dremf(float, float);
-extern float expm1f(float);
-extern float log1pf(float);
-extern float gammaf_r(float, int *);
-extern float lgammaf_r(float, int *);
+extern double _FUNC(significand)(double);
+extern double _FUNC(copysign)(double, double);
+extern int    _FUNC(ilogb)(double);
+extern double _FUNC(rint)(double);
+extern double _FUNC(scalbn)(double, int);
+extern double _FUNC(drem)(double, double);
+extern double _FUNC(gamma_r)(double, int *);
+extern double _FUNC(lgamma_r)(double, int *);
+extern float  _FUNC(acosf)(float);
+extern float  _FUNC(asinf)(float);
+extern float  _FUNC(atanf)(float);
+extern float  _FUNC(atan2f)(float, float);
+extern float  _FUNC(cosf)(float);
+extern float  _FUNC(sinf)(float);
+extern float  _FUNC(tanf)(float);
+extern float  _FUNC(coshf)(float);
+extern float  _FUNC(sinhf)(float);
+extern float  _FUNC(tanhf)(float);
+extern float  _FUNC(expf)(float);
+extern float  _FUNC(frexpf)(float, int *);
+extern float  _FUNC(ldexpf)(float, int);
+extern float  _FUNC(logf)(float);
+extern float  _FUNC(log10f)(float);
+extern float  _FUNC(modff)(float, float *);
+extern float  _FUNC(powf)(float, float);
+extern float  _FUNC(sqrtf)(float);
+extern float  _FUNC(ceilf)(float);
+extern float  _FUNC(fabsf)(float);
+extern float  _FUNC(floorf)(float);
+extern float  _FUNC(fmodf)(float, float);
+extern float  _FUNC(erff)(float);
+extern float  _FUNC(erfcf)(float);
+extern float  _FUNC(gammaf)(float);
+extern float  _FUNC(hypotf)(float, float);
+extern int    _FUNC(isinff)(float);
+extern int    _FUNC(isnanf)(float);
+extern int    _FUNC(finitef)(float);
+extern float  _FUNC(j0f)(float);
+extern float  _FUNC(j1f)(float);
+extern float  _FUNC(jnf)(int, float);
+extern float  _FUNC(lgammaf)(float);
+extern float  _FUNC(nanf)(const char*);
+extern float  _FUNC(y0f)(float);
+extern float  _FUNC(y1f)(float);
+extern float  _FUNC(ynf)(int, float);
+extern float  _FUNC(acoshf)(float);
+extern float  _FUNC(asinhf)(float);
+extern float  _FUNC(atanhf)(float);
+extern float  _FUNC(cbrtf)(float);
+extern float  _FUNC(logbf)(float);
+extern float  _FUNC(nextafterf)(float, float);
+extern float  _FUNC(remainderf)(float, float);
+extern float  _FUNC(scalbf)(float, float);
+extern float  _FUNC(significandf)(float);
+extern float  _FUNC(copysignf)(float, float);
+extern int    _FUNC(ilogbf)(float);
+extern float  _FUNC(rintf)(float);
+extern float  _FUNC(scalbnf)(float, int);
+extern float  _FUNC(dremf)(float, float);
+extern float  _FUNC(expm1f)(float);
+extern float  _FUNC(log1pf)(float);
+extern float  _FUNC(gammaf_r)(float, int *);
+extern float  _FUNC(lgammaf_r)(float, int *);
 
 #endif /* !_POSIX_SOURCE */
 #endif /* !__STRICT_ANSI__ */
