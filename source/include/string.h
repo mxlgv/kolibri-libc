@@ -180,4 +180,7 @@ size_t _FUNC(strlen)(const char * s);
 /* The function reverses the sequence of characters in the string pointed to by str. */
 char* _FUNC(strrev)(char *str);
 
+/* The strdup function executes the function pointed to by the str argument. */
+char* _FUNC(strdup)(const char *str);
+
 #endif
