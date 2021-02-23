@@ -1,11 +1,13 @@
 #ifndef _ERRNO_H_
 #define _ERRNO_H_
 
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern int errno;
+extern int _GLOBAL_VAR(errno);
 
 #define EPERM 1 /* Operation not permitted */
 #define ENOENT 2 /* No such file or directory */
@@ -139,4 +141,4 @@ extern int errno;
 }
 #endif
 
-#endif // ERRNO_H__
+#endif // _ERRNO_H_
