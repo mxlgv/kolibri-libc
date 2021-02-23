@@ -1,12 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-static char *strdup(const char *str) {
-    char *buf = malloc(strlen(str) + 1);
-    buf[strlen(str)] = 0;
-    strcpy(buf, str);
-    return buf;
-}
+#include <string.h>
 
 FILE *freopen(const char *restrict _name, const char *restrict _mode, FILE *restrict out) {
     ksys_bdfe_t info;
