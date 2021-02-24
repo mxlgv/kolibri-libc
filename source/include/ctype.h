@@ -1,5 +1,5 @@
-#ifndef _CTYPE_H
-#define _CTYPE_H
+#ifndef _CTYPE_H_
+#define _CTYPE_H_
 /*
 ** All character classification functions except isascii().
 ** Integer argument (c) must be in ASCII range (0-127) for
