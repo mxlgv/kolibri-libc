@@ -6,18 +6,9 @@
 
 #include <stddef.h>
 
-#ifdef _USE_LIBM_MATH_H
-#include <libm/math.h>
-#else
-
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef __dj_ENFORCE_ANSI_FREESTANDING
-
-extern double __dj_huge_val;
-#define HUGE_VAL  __dj_huge_val
 
 double	_FUNC(acos)(double _x);
 double	_FUNC(asin)(double _x);
@@ -41,10 +32,6 @@ double	_FUNC(sinh)(double _x);
 double	_FUNC(sqrt)(double _x);
 double	_FUNC(tan)(double _x);
 double	_FUNC(tanh)(double _x);
-  
-#ifndef __STRICT_ANSI__
-
-#ifndef _POSIX_SOURCE
 
 #define M_E		    2.7182818284590452354
 #define M_LOG2E		1.4426950408889634074
@@ -177,17 +164,8 @@ extern float  _FUNC(log1pf)(float);
 extern float  _FUNC(gammaf_r)(float, int *);
 extern float  _FUNC(lgammaf_r)(float, int *);
 
-#endif /* !_POSIX_SOURCE */
-#endif /* !__STRICT_ANSI__ */
-#endif /* !__dj_ENFORCE_ANSI_FREESTANDING */
-
-#ifndef __dj_ENFORCE_FUNCTION_CALLS
-#endif /* !__dj_ENFORCE_FUNCTION_CALLS */
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _USE_LIBM_MATH_H */
-
-#endif /* !__dj_include_math_h_ */
+#endif /* _MATH_H_ */
