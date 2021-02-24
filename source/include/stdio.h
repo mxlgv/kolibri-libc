@@ -109,6 +109,7 @@ int    _FUNC(vfprintf)(FILE *restrict, const char *restrict, va_list);
 int    _FUNC(vfscanf)(FILE *restrict, const char *restrict, va_list);
 int    _FUNC(vprintf)(const char *restrict, va_list);
 int    _FUNC(vscanf)(const char *restrict, va_list);
+int    _FUNC(vsscanf)(const char *, const char*, va_list);
 
 int    _FUNC(remove)(const char *);
 int    _FUNC(rename)(const char *, const char *);
