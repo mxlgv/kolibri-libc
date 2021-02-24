@@ -4,8 +4,8 @@
    Permission is granted to use, modify, and / or redistribute at will.
 */
 
-#ifndef _STRING_H
-#define _STRING_H
+#ifndef _STRING_H_
+#define _STRING_H_
 
 #include <stddef.h>
 
@@ -23,25 +23,25 @@ extern "C" {
 
 /* Copying functions */
 
-void *memccpy(void *restrict dest, const void *restrict src, int c, size_t n);
+void* _FUNC(memccpy)(void *restrict dest, const void *restrict src, int c, size_t n);
 
 /* Copy a number of n characters from the memory area pointed to by s2 to the
    area pointed to by s1. If the two areas overlap, behaviour is undefined.
    Returns the value of s1.
 */
-void *memcpy(void* s1, const void* s2, size_t n);
+void* _FUNC(memcpy)(void* s1, const void* s2, size_t n);
 
 /* Copy a number of n characters from the memory area pointed to by s2 to the
    area pointed to by s1. The two areas may overlap.
    Returns the value of s1.
 */
-void *memmove(void* s1, const void* s2, size_t n);
+void* _FUNC(memmove)(void* s1, const void* s2, size_t n);
 
 /* Copy the character array s2 (including terminating '\0' byte) into the
    character array s1.
    Returns the value of s1.
 */
-char * strcpy(char*  s1, const char* s2);
+char* _FUNC(strcpy)(char*  s1, const char* s2);
 
 /* Copy a maximum of n characters from the character array s2 into the character
    array s1. If s2 is shorter than n characters, '\0' bytes will be appended to
@@ -50,7 +50,7 @@ char * strcpy(char*  s1, const char* s2);
    behaviour is undefined.
    Returns the value of s1.
 */
-char * strncpy(char* s1, const char* s2, size_t n);
+char* _FUNC(strncpy)(char* s1, const char* s2, size_t n);
 
 /* Concatenation functions */
 
@@ -59,7 +59,7 @@ char * strncpy(char* s1, const char* s2, size_t n);
    the arrays overlap, behaviour is undefined.
    Returns the value of s1.
 */
-char * strcat(char* s1, const char* s2);
+char* _FUNC(strcat)(char* s1, const char* s2);
 
 /* Append a maximum of n characters from the character array s2 to the character
    array s1 (first character of s2 overwriting the '\0' of s1). A terminating
@@ -67,7 +67,7 @@ char * strcat(char* s1, const char* s2);
    written. If the arrays overlap, behaviour is undefined.
    Returns the value of s1.
 */
-char * strncat(char* s1, const char* s2, size_t n);
+char* _FUNC(strncat)(char* s1, const char* s2, size_t n);
 
 /* Comparison functions */
 
@@ -75,13 +75,13 @@ char * strncat(char* s1, const char* s2, size_t n);
    Returns 0 if s1 == s2, a negative number if s1 < s2, and a positive number if
    s1 > s2.
 */
-int memcmp(const void * s1, const void* s2, size_t n);
+int _FUNC(memcmp)(const void * s1, const void* s2, size_t n);
 
 /* Compare the character arrays s1 and s2.
    Returns 0 if s1 == s2, a negative number if s1 < s2, and a positive number if
    s1 > s2.
 */
-int strcmp(const char * s1, const char* s2);
+int _FUNC(strcmp)(const char * s1, const char* s2);
 
 /* Compare the character arrays s1 and s2, interpreted as specified by the
    LC_COLLATE category of the current locale.
@@ -90,21 +90,21 @@ int strcmp(const char * s1, const char* s2);
    TODO: Currently a dummy wrapper for strcmp() as PDCLib does not yet support
    locales.
 */
-int strcoll(const char* s1, const char* s2);
+int _FUNC(strcoll)(const char* s1, const char* s2);
 
 /* Compare no more than the first n characters of the character arrays s1 and
    s2.
    Returns 0 if s1 == s2, a negative number if s1 < s2, and a positive number if
    s1 > s2.
 */
-int strncmp(const char* s1, const char* s2, size_t n);
+int _FUNC(strncmp)(const char* s1, const char* s2, size_t n);
 
 /* Transform the character array s2 as appropriate for the LC_COLLATE setting of
    the current locale. If length of resulting string is less than n, store it in
    the character array pointed to by s1. Return the length of the resulting
    string.
 */
-size_t strxfrm(char* s1, const char* s2, size_t n);
+size_t _FUNC(strxfrm)(char* s1, const char* s2, size_t n);
 
 /* Search functions */
 
@@ -112,42 +112,42 @@ size_t strxfrm(char* s1, const char* s2, size_t n);
    character c (interpreted as unsigned char).
    Returns a pointer to the first instance found, or NULL.
 */
-void* memchr(const void* s, int c, size_t n);
+void* _FUNC(memchr)(const void* s, int c, size_t n);
 
 /* Search the character array s (including terminating '\0') for the character c
    (interpreted as char).
    Returns a pointer to the first instance found, or NULL.
 */
-char * strchr(const char* s, int c);
+char* _FUNC(strchr)(const char* s, int c);
 
 /* Determine the length of the initial substring of character array s1 which
    consists only of characters not from the character array s2.
    Returns the length of that substring.
 */
-size_t strcspn(const char* s1, const char* s2);
+size_t _FUNC(strcspn)(const char* s1, const char* s2);
 
 /* Search the character array s1 for any character from the character array s2.
    Returns a pointer to the first occurrence, or NULL.
 */
-char* strpbrk(const char* s1, const char* s2);
+char* _FUNC(strpbrk)(const char* s1, const char* s2);
 
 /* Search the character array s (including terminating '\0') for the character c
    (interpreted as char).
    Returns a pointer to the last instance found, or NULL.
 */
-char* strrchr(const char * s, int c );
+char* _FUNC(strrchr)(const char * s, int c );
 
 /* Determine the length of the initial substring of character array s1 which
    consists only of characters from the character array s2.
    Returns the length of that substring.
 */
-size_t strspn(const char * s1, const char * s2);
+size_t _FUNC(strspn)(const char * s1, const char * s2);
 
 /* Search the character array s1 for the substring in character array s2.
    Returns a pointer to that sbstring, or NULL. If s2 is of length zero,
    returns s1.
 */
-char* strstr(const char * s1, const char * s2);
+char* _FUNC(strstr)(const char * s1, const char * s2);
 
 /* In a series of subsequent calls, parse a C string into tokens.
    On the first call to strtok(), the first argument is a pointer to the to-be-
@@ -158,7 +158,7 @@ char* strstr(const char * s1, const char * s2);
    Returns a pointer to the next token.
    WARNING: This function uses static storage, and as such is not reentrant.
 */
-char* strtok(char* s1, const char* s2);
+char* _FUNC(strtok)(char* s1, const char* s2);
 
 /* Miscellaneous functions */
 
@@ -166,18 +166,21 @@ char* strtok(char* s1, const char* s2);
    characters of the memory area pointed to by s.
    Returns s.
 */
-void* memset(void* s, int c, size_t n);
+void* _FUNC(memset)(void* s, int c, size_t n);
 
 /* Map an error number to a (locale-specific) error message string. Error
    numbers are typically errno values, but any number is mapped to a message.
    TODO: PDCLib does not yet support locales.
 */
-char * strerror(int errnum);
+char*  _FUNC(strerror)(int errnum);
 
 /* Returns the length of the string s (excluding terminating '\0').*/
-size_t strlen(const char * s);
+size_t _FUNC(strlen)(const char * s);
 
 /* The function reverses the sequence of characters in the string pointed to by str. */
-char* strrev(char *str);
+char* _FUNC(strrev)(char *str);
+
+/* The strdup function executes the function pointed to by the str argument. */
+char* _FUNC(strdup)(const char *str);
 
 #endif

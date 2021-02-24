@@ -1,9 +1,11 @@
-#ifndef _TIME_H
-#define _TIME_H
+#ifndef _TIME_H_
+#define _TIME_H_
+
+#include <ksys.h>
 
 typedef unsigned long int clock_t;
 typedef unsigned long int time_t;
-#define clock() get_tick_count()
+#define clock() _ksys_get_clock()
 #define CLOCKS_PER_SEC 100
 
 struct tm {
@@ -18,10 +20,10 @@ struct tm {
 	int tm_isdst; /* Daylight Saving Time flag	*/
 };
 
-time_t mktime (struct tm * timeptr);
-time_t time (time_t* timer);
-struct tm * localtime (const time_t * timer); /* non-standard!  ignore parameter and return just time now, not generate tm_isdst, tm_yday, tm_wday == -1  */
-double difftime (time_t end, time_t beginning);
+time_t _FUNC(mktime)(struct tm * timeptr);
+time_t _FUNC(time)(time_t* timer);
+struct tm * _FUNC(localtime)(const time_t * timer); /* non-standard!  ignore parameter and return just time now, not generate tm_isdst, tm_yday, tm_wday == -1  */
+double _FUNC(difftime)(time_t end, time_t beginning);
 
 extern struct tm buffertime;
 

@@ -22,11 +22,11 @@ typedef struct{
 }DIR;
 
 
-int closedir(DIR *dir);
-DIR *opendir(const char *path);
-struct dirent *readdir(DIR *);
-void rewinddir(DIR *dir);
-void seekdir(DIR *dir, unsigned pos);
-unsigned telldir(DIR *dir);
+int  _FUNC(closedir)(DIR *dir);
+DIR* _FUNC(opendir)(const char *path);
+struct dirent* _FUNC(readdir)(DIR *);
+void _FUNC(rewinddir)(DIR *dir);
+void _FUNC(seekdir)(DIR *dir, unsigned pos);
+unsigned _FUNC(telldir)(DIR *dir);
 
 #endif // _DIRENT_H_
