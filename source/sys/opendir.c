@@ -2,10 +2,11 @@
 #include <ksys.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define CHECK_DIR_ERR() if(_ksys_work_files(&inf)){ \
                             free((void*)inf.p16); \
-                            /*errno = ENOTDIR;*/\
+                            errno = ENOTDIR; \
                             return NULL; \
                         } 
 
@@ -13,7 +14,7 @@ DIR* opendir(const char* path)
 {
     DIR* list = malloc(sizeof(DIR));
     if(list==NULL){
-        //errno = ENOMEM;
+        errno = ENOMEM;
         return NULL;
     }
 
