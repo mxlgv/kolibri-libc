@@ -8,10 +8,8 @@ SRC = $(NAME).c
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(CC) -O2 $(SRC)
+	$(CC) -s -O2 $(SRC)
 	$(LD) $(NAME).o -o $(NAME) -lc
-	strip -s $(NAME) -o $(NAME)
-	objcopy $(NAME) -O binary
 
 clean:
 	rm $(NAME).o $(NAME)
