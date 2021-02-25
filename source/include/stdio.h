@@ -62,6 +62,7 @@ typedef struct FILE_s {
     int orientation; // 0 - undiefned, 1 - byte, 2 - wide
     int mode; // flags _STDIO_F_*
     int append_offset; // do not seek before this point ("a" mode)
+    int __ungetc_emu_buff; // Uses __ungetc_emu (temporary solution!)
 } FILE;
 
 #define _IOFBF 0
@@ -104,7 +105,7 @@ int    _FUNC(putchar)(int);
 int    _FUNC(puts)(const char *);
 int    _FUNC(scanf)(const char *restrict, ...);
 char*  _FUNC(gets)(char *str);
-int    _FUNC(ungetc)(int, FILE *);
+//int    _FUNC(ungetc)(int, FILE *);
 int    _FUNC(vfprintf)(FILE *restrict, const char *restrict, va_list);
 int    _FUNC(vfscanf)(FILE *restrict, const char *restrict, va_list);
 int    _FUNC(vprintf)(const char *restrict, va_list);
