@@ -3,6 +3,13 @@
 # Copyright maxcodehack, 2021
 # gcc options for build for KolibriOS
 
+# We start w/o param?
+if [ -z "$*" ]
+then
+	echo -e "\033[1;31mfatal error: \033[0mno input files"
+	exit 1
+fi
+
 # KLIBC variable exists?
 if [ -z "$KLIBC" ]
 then
