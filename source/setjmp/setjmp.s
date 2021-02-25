@@ -1,11 +1,8 @@
 .global ___setjmp
-.hidden ___setjmp
 .global __setjmp
 .global _setjmp
 .global setjmp
-.type __setjmp,@function
-.type _setjmp,@function
-.type setjmp,@function
+
 ___setjmp:
 __setjmp:
 _setjmp:
