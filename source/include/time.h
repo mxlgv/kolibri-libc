@@ -20,10 +20,10 @@ struct tm {
 	int tm_isdst; /* Daylight Saving Time flag	*/
 };
 
-time_t _FUNC(mktime)(struct tm * timeptr);
-time_t _FUNC(time)(time_t* timer);
-struct tm * _FUNC(localtime)(const time_t * timer); /* non-standard!  ignore parameter and return just time now, not generate tm_isdst, tm_yday, tm_wday == -1  */
-double _FUNC(difftime)(time_t end, time_t beginning);
+extern time_t _FUNC(mktime)(struct tm * timeptr);
+extern time_t _FUNC(time)(time_t* timer);
+extern struct tm * _FUNC(localtime)(const time_t * timer); /* non-standard!  ignore parameter and return just time now, not generate tm_isdst, tm_yday, tm_wday == -1  */
+extern double _FUNC(difftime)(time_t end, time_t beginning);
 
 extern struct tm buffertime;
 

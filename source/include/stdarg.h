@@ -20,8 +20,8 @@ typedef struct {
 
 typedef __va_list_struct va_list[1];
 
-void  _FUNC(__va_start)(__va_list_struct *ap, void *fp);
-void* _FUNC(__va_arg)(__va_list_struct *ap, int arg_type, int size, int align);
+extern void  _FUNC(__va_start)(__va_list_struct *ap, void *fp);
+extern void* _FUNC(__va_arg)(__va_list_struct *ap, int arg_type, int size, int align);
 
 #define va_start(ap, last) __va_start(ap, __builtin_frame_address(0))
 #define va_arg(ap, type)                                                \

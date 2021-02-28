@@ -10,28 +10,28 @@
 extern "C" {
 #endif
 
-double	_FUNC(acos)(double _x);
-double	_FUNC(asin)(double _x);
-double	_FUNC(atan)(double _x);
-double	_FUNC(atan2)(double _y, double _x);
-double	_FUNC(ceil)(double _x);
-double	_FUNC(cos)(double _x);
-double	_FUNC(cosh)(double _x);
-double	_FUNC(exp)(double _x);
-double	_FUNC(fabs)(double _x);
-double	_FUNC(floor)(double _x);
-double	_FUNC(fmod)(double _x, double _y);
-double	_FUNC(frexp)(double _x, int *_pexp);
-double	_FUNC(ldexp)(double _x, int _exp);
-double	_FUNC(log)(double _y);
-double	_FUNC(log10)(double _x);
-double	_FUNC(modf)(double _x, double *_pint);
-double	_FUNC(pow)(double _x, double _y);
-double	_FUNC(sin)(double _x);
-double	_FUNC(sinh)(double _x);
-double	_FUNC(sqrt)(double _x);
-double	_FUNC(tan)(double _x);
-double	_FUNC(tanh)(double _x);
+extern double	_FUNC(acos)(double _x);
+extern double	_FUNC(asin)(double _x);
+extern double	_FUNC(atan)(double _x);
+extern double	_FUNC(atan2)(double _y, double _x);
+extern double	_FUNC(ceil)(double _x);
+extern double	_FUNC(cos)(double _x);
+extern double	_FUNC(cosh)(double _x);
+extern double	_FUNC(exp)(double _x);
+extern double	_FUNC(fabs)(double _x);
+extern double	_FUNC(floor)(double _x);
+extern double	_FUNC(fmod)(double _x, double _y);
+extern double	_FUNC(frexp)(double _x, int *_pexp);
+extern double	_FUNC(ldexp)(double _x, int _exp);
+extern double	_FUNC(log)(double _y);
+extern double	_FUNC(log10)(double _x);
+extern double	_FUNC(modf)(double _x, double *_pint);
+extern double	_FUNC(pow)(double _x, double _y);
+extern double	_FUNC(sin)(double _x);
+extern double	_FUNC(sinh)(double _x);
+extern double	_FUNC(sqrt)(double _x);
+extern double	_FUNC(tan)(double _x);
+extern double	_FUNC(tanh)(double _x);
 
 #define M_E		    2.7182818284590452354
 #define M_LOG2E		1.4426950408889634074
@@ -49,21 +49,21 @@ double	_FUNC(tanh)(double _x);
 #define PI		M_PI
 #define PI2		M_PI_2
 
-double	_FUNC(acosh)(double);
-double	_FUNC(asinh)(double);
-double	_FUNC(atanh)(double);
-double	_FUNC(cbrt)(double);
-double	_FUNC(exp10)(double _x);
-double	_FUNC(exp2)(double _x);
-double	_FUNC(expm1)(double);
-double	_FUNC(hypot)(double, double);
-double	_FUNC(log1p)(double);
-double	_FUNC(log2)(double _x);
-long double _FUNC(modfl)(long double _x, long double *_pint);
-double	_FUNC(pow10)(double _x);
-double	_FUNC(pow2)(double _x);
-double	_FUNC(powi)(double, int);
-void	_FUNC(sincos)(double, double *, double *);
+extern double	_FUNC(acosh)(double);
+extern double	_FUNC(asinh)(double);
+extern double	_FUNC(atanh)(double);
+extern double	_FUNC(cbrt)(double);
+extern double	_FUNC(exp10)(double _x);
+extern double	_FUNC(exp2)(double _x);
+extern double	_FUNC(expm1)(double);
+extern double	_FUNC(hypot)(double, double);
+extern double	_FUNC(log1p)(double);
+extern double	_FUNC(log2)(double _x);
+extern long double _FUNC(modfl)(long double _x, long double *_pint);
+extern double	_FUNC(pow10)(double _x);
+extern double	_FUNC(pow2)(double _x);
+extern double	_FUNC(powi)(double, int);
+extern void	_FUNC(sincos)(double, double *, double *);
 
 /* These are in libm.a (Cygnus).  You must link -lm to get these */
 /* See libm/math.h for comments */

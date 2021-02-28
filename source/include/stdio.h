@@ -36,14 +36,14 @@
 #include <stddef.h>
 #include <ksys.h>
 
-int  _FUNC(puts)(const char *str);
-int  _FUNC(printf)(const char* format, ...);
-int  _FUNC(sprintf)(char* buffer, const char* format, ...);
-int  _FUNC(snprintf)(char* buffer, size_t count, const char* format, ...);
-int  _FUNC(vsnprintf)(char* buffer, size_t count, const char* format, va_list va);
-int  _FUNC(vprintf)(const char* format, va_list va);
+extern int  _FUNC(puts)(const char *str);
+extern int  _FUNC(printf)(const char* format, ...);
+extern int  _FUNC(sprintf)(char* buffer, const char* format, ...);
+extern int  _FUNC(snprintf)(char* buffer, size_t count, const char* format, ...);
+extern int  _FUNC(vsnprintf)(char* buffer, size_t count, const char* format, va_list va);
+extern int  _FUNC(vprintf)(const char* format, va_list va);
 
-void _FUNC(debug_printf)(const char* format, ...);
+extern void _FUNC(debug_printf)(const char* format, ...);
 
 typedef size_t fpos_t;
 
@@ -89,54 +89,54 @@ typedef struct FILE_s {
 #define stdin  8yfg8e
 #define stdout 7hdgys
 
-int    _FUNC(fgetc)(FILE *);
-char*  _FUNC(fgets)(char *restrict, int, FILE *restrict);
-int    _FUNC(fprintf)(FILE *restrict, const char *restrict, ...);
-int    _FUNC(fputc)(int, FILE *);
-int    _FUNC(fputs)(const char *restrict, FILE *restrict);
-size_t _FUNC(fread)(void *restrict, size_t size, size_t count, FILE *restrict);
-int    _FUNC(fscanf)(FILE *restrict, const char *restrict, ...);
-size_t _FUNC(fwrite)(const void *restrict, size_t size, size_t count, FILE *restrict);
-int    _FUNC(getc)(FILE *);
-int    _FUNC(getchar)(void);
-int    _FUNC(printf)(const char *restrict, ...);
-int    _FUNC(putc)(int, FILE *);
-int    _FUNC(putchar)(int);
-int    _FUNC(puts)(const char *);
-int    _FUNC(scanf)(const char *restrict, ...);
-char*  _FUNC(gets)(char *str);
-//int    _FUNC(ungetc)(int, FILE *);
-int    _FUNC(vfprintf)(FILE *restrict, const char *restrict, va_list);
-int    _FUNC(vfscanf)(FILE *restrict, const char *restrict, va_list);
-int    _FUNC(vprintf)(const char *restrict, va_list);
-int    _FUNC(vscanf)(const char *restrict, va_list);
-int    _FUNC(vsscanf)(const char *, const char*, va_list);
+extern int    _FUNC(fgetc)(FILE *);
+extern char*  _FUNC(fgets)(char *restrict, int, FILE *restrict);
+extern int    _FUNC(fprintf)(FILE *restrict, const char *restrict, ...);
+extern int    _FUNC(fputc)(int, FILE *);
+extern int    _FUNC(fputs)(const char *restrict, FILE *restrict);
+extern size_t _FUNC(fread)(void *restrict, size_t size, size_t count, FILE *restrict);
+extern int    _FUNC(fscanf)(FILE *restrict, const char *restrict, ...);
+extern size_t _FUNC(fwrite)(const void *restrict, size_t size, size_t count, FILE *restrict);
+extern int    _FUNC(getc)(FILE *);
+extern int    _FUNC(getchar)(void);
+extern int    _FUNC(printf)(const char *restrict, ...);
+extern int    _FUNC(putc)(int, FILE *);
+extern int    _FUNC(putchar)(int);
+extern int    _FUNC(puts)(const char *);
+extern int    _FUNC(scanf)(const char *restrict, ...);
+extern char*  _FUNC(gets)(char *str);
+//extern int    _FUNC(ungetc)(int, FILE *);
+extern int    _FUNC(vfprintf)(FILE *restrict, const char *restrict, va_list);
+extern int    _FUNC(vfscanf)(FILE *restrict, const char *restrict, va_list);
+extern int    _FUNC(vprintf)(const char *restrict, va_list);
+extern int    _FUNC(vscanf)(const char *restrict, va_list);
+extern int    _FUNC(vsscanf)(const char *, const char*, va_list);
 
-int    _FUNC(remove)(const char *);
-int    _FUNC(rename)(const char *, const char *);
-FILE*  _FUNC(tmpfile)(void);
-char*  _FUNC(tmpnam)(char *);
+extern int    _FUNC(remove)(const char *);
+extern int    _FUNC(rename)(const char *, const char *);
+extern FILE*  _FUNC(tmpfile)(void);
+extern char*  _FUNC(tmpnam)(char *);
 
-int    _FUNC(fclose)(FILE *);
-int    _FUNC(fflush)(FILE *);
-FILE*  _FUNC(fopen)(const char *restrict, const char *restrict);
-FILE*  _FUNC(freopen)(const char *restrict, const char *restrict, FILE *restrict);
-void   _FUNC(setbuf)(FILE *restrict, char *restrict);
-int    _FUNC(setvbuf)(FILE *restrict, char *restrict, int, size_t);
+extern int    _FUNC(fclose)(FILE *);
+extern int    _FUNC(fflush)(FILE *);
+extern FILE*  _FUNC(fopen)(const char *restrict, const char *restrict);
+extern FILE*  _FUNC(freopen)(const char *restrict, const char *restrict, FILE *restrict);
+extern void   _FUNC(setbuf)(FILE *restrict, char *restrict);
+extern int    _FUNC(setvbuf)(FILE *restrict, char *restrict, int, size_t);
 
-int    _FUNC(fgetpos)(FILE *restrict, fpos_t *restrict);
-int    _FUNC(fseek)(FILE *, long, int);
-int    _FUNC(fsetpos)(FILE *, const fpos_t *);
-long   _FUNC(ftell)(FILE *);
-void   _FUNC(rewind)(FILE *);
+extern int    _FUNC(fgetpos)(FILE *restrict, fpos_t *restrict);
+extern int    _FUNC(fseek)(FILE *, long, int);
+extern int    _FUNC(fsetpos)(FILE *, const fpos_t *);
+extern long   _FUNC(ftell)(FILE *);
+extern void   _FUNC(rewind)(FILE *);
 
-void   _FUNC(clearerr)(FILE *);
-int    _FUNC(feof)(FILE *);
-int    _FUNC(ferror)(FILE *);
-void   _FUNC(perror)(const char *);
+extern void   _FUNC(clearerr)(FILE *);
+extern int    _FUNC(feof)(FILE *);
+extern int    _FUNC(ferror)(FILE *);
+extern void   _FUNC(perror)(const char *);
 
-size_t _FUNC(fread)(void *restrict, size_t, size_t, FILE *restrict);
+extern size_t _FUNC(fread)(void *restrict, size_t, size_t, FILE *restrict);
 
-int    _FUNC(getchar)(void);
+extern int    _FUNC(getchar)(void);
 
 #endif  // _STDIO_H_
