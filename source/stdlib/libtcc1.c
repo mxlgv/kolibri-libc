@@ -388,6 +388,16 @@ long long __divdi3(long long u, long long v)
     return w;
 }
 
+// https://github.com/KaMeHb-UA/UE4m/blob/1d9ad5bfead06520570c7f24dad062f9f8717c1a/\
+Engine/Extras/ThirdPartyNotUE/emsdk/emscripten/incoming/system/lib/compiler-rt/lib/\
+builtins/divmoddi4.c
+long long __divmoddi4(long long a, long long b, long long* rem)
+{
+    long long d = __divdi3(a, b);
+    *rem = a - (d * b);
+    return d;
+}
+
 long long __moddi3(long long u, long long v)
 {
     int c = 0;

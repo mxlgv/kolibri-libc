@@ -18,7 +18,7 @@ then
 fi
 
 # GCC Flags for KolibriOS
-FLAGS="-c -m32 -fno-builtin -ffreestanding -nostdinc -fno-common -fno-pie -fno-stack-protector"
+FLAGS="-c -m32 -nostdinc -fno-common -fno-builtin -fno-leading-underscore -fno-pie -fno-stack-protector -fno-stack-check -mpreferred-stack-boundary=2"
 
 # And, execute gcc:
 gcc $FLAGS -I $KLIBC/source/include $*
