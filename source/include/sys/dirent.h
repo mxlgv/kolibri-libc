@@ -1,3 +1,5 @@
+/* Copyright (C) 2021 Logaev Maxim (turbocat2001), GPLv2 */
+
 #ifndef _DIRENT_H_
 #define _DIRENT_H_
 
