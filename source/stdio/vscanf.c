@@ -1,4 +1,4 @@
-#include "format_scan.h"
+//#include "format_scan.h"
 #include <string.h>
 
 char *__scanf_buffer=NULL;

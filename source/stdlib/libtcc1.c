@@ -655,10 +655,10 @@ long long __fixxfdi (long double a1)
 /* Avoid including stdlib.h because it is not easily available when
    cross compiling */
 #include <stddef.h> /* size_t definition is needed for a x86_64-tcc to parse memset() */
-extern void *malloc(unsigned long long);
-extern void *memset(void *s, int c, size_t n);
-extern void free(void*);
-extern void abort(void);
+ void *malloc(unsigned long long);
+ void *memset(void *s, int c, size_t n);
+ void free(void*);
+ void abort(void);
 #endif
 
 enum __va_arg_type {

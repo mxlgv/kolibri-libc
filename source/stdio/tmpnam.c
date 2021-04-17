@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <ksys.h>
+#include <sys/ksys.h>
 #include <string.h>
 
 static char buf[FILENAME_MAX + 1];

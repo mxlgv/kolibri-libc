@@ -1,0 +1,3 @@
+-I
+include
+-D_NOT_FUNC_POINT

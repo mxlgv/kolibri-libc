@@ -35,7 +35,7 @@ extern void* _FUNC(memcpy)(void* s1, const void* s2, size_t n);
    area pointed to by s1. The two areas may overlap.
    Returns the value of s1.
 */
-extern void* _FUNC(memmove)(void* s1, const void* s2, size_t n);
+extern void* memmove(void* s1, const void* s2, size_t n);
 
 /* Copy the character array s2 (including terminating '\0' byte) into the
    character array s1.

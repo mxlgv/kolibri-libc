@@ -15,6 +15,6 @@ enum flags_t
         flag_point      = 0x100
 };
 
-extern char *__scanf_buffer;
+ char *__scanf_buffer;
 
 int _format_scan(const void *src, const char *fmt, va_list argp, virtual_getc vgetc, virtual_ungetc vungetc);

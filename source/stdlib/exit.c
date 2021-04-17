@@ -1,7 +1,7 @@
 /* Copyright (C) 2021 Logaev Maxim (turbocat2001), GPLv2 */
 
 #include "../stdio/conio.h"
-#include <ksys.h>
+#include <sys/ksys.h>
 
 void exit(int status)
 {

@@ -26,12 +26,12 @@ typedef uint64_t uintmax_t;
     #define NULL ((void*)0)
 #endif
 
-#ifdef _DYNAMIC
-    #define _FUNC(func) (*func)
-    #define _GLOBAL_VAR(var) *var
-#else
+#ifdef _NOT_FUNC_POINT
     #define _FUNC(func) func
     #define _GLOBAL_VAR(var) var
+#else
+    #define _FUNC(func) (*func)
+    #define _GLOBAL_VAR(var) *var
 #endif
 
 #define offsetof(type, field) ((size_t)&((type *)0)->field)
