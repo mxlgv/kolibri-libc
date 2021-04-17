@@ -29,7 +29,7 @@ void (*debug_printf)(const char* format, ...);
 void panic(char* func_name){
     _ksys_debug_puts("Panic! Func: ");
     _ksys_debug_puts(func_name);
-    _ksys_debug_puts(" = NULL\n");
+    _ksys_debug_puts(" == NULL\n");
     _ksys_exit();
 }
 
@@ -39,7 +39,7 @@ void load_libc(){
         _ksys_debug_puts("Error! libc.obj not loaded!\n");
         _ksys_exit();
     }
-    snprintf = _ksys_get_coff_func(libc, "snprintf2", panic);
+    snprintf = _ksys_get_coff_func(libc, "snprintf", panic);
     sprintf = _ksys_get_coff_func(libc, "sprintf", panic);
     strcpy = _ksys_get_coff_func(libc, "strcpy", panic);
     debug_printf = _ksys_get_coff_func(libc, "debug_printf", panic);
@@ -52,16 +52,15 @@ void draw_window()
     // start redraw
     _ksys_start_draw();
 	// define&draw window
-	_ksys_create_window(10, 40, 600, 400, "My window", sys_color_table.work_area, 0x13);
+    _ksys_create_window(10, 40, 600, 400, "My window", sys_color_table.work_area, 0x13);
     _ksys_process_info(&proc_info, -1);
 
     win_width = proc_info.winx_size;
     win_hight = proc_info.winy_size;
-
-	_ksys_define_button(10, 30, 70, 20, BTN_POP, sys_color_table.work_button);
+    
+    _ksys_define_button(10, 30, 70, 20, BTN_POP, sys_color_table.work_button);
     _ksys_draw_text("BUTTON1", 15, 34, 0, 0x90000000 | sys_color_table.work_button_text);  //0x80000000 asciiz
-
-	_ksys_define_button(100, 30, 80, 20, BTN_UNLOCK, sys_color_table.work_button);
+    _ksys_define_button(100, 30, 80, 20, BTN_UNLOCK, sys_color_table.work_button);
     _ksys_draw_text("BUTTTON2", 110, 34, 0, 0x90000000 | sys_color_table.work_button_text);
 
     // display statusbar
@@ -131,7 +130,7 @@ int main()
                 if (n < 0 || n >= LINES) break;
                 debug_printf("click on str(%d), clip slot(%d)\n", n, LINES - n - 1);
                 sprintf(statusbar, "click on str(%d), clip slot(%d)\n", n, LINES - n - 1);
-		        draw_window();
+                draw_window();
             }
             break;
         }
