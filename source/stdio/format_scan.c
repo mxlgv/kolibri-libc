@@ -15,9 +15,18 @@ todo:
 
 #include <stdio.h>
 #include <ctype.h>
-#include <math.h>
+//#include <math.h>
 #include <stdarg.h>
 #include "format_scan.h"
+
+
+int _pow(int a,int n)
+{
+    if(n==0) return 1;
+    else
+        if(n==1) return a;
+        else return _pow(a+a, n-1);
+}
 
 static int __try_parse_real(long double *real, int ch, const void *src, void *save, virtual_getc vgetc, virtual_ungetc vungetc)
 // returns 1 if OK, -1 == EOF, -2 parse broken
@@ -133,7 +142,7 @@ static int __try_parse_real(long double *real, int ch, const void *src, void *sa
         }
     }
     div *= sign;
-    *real *= pow(10, div);
+    *real *= _pow(10,div); // Временное решение 
 
     return 1;
 }

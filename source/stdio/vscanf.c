@@ -1,7 +1,12 @@
-//#include "format_scan.h"
 #include <string.h>
 
 char *__scanf_buffer=NULL;
+typedef int (*virtual_getc)(void *sp, const void *obj);
+typedef void (*virtual_ungetc)(void *sp, int c, const void *obj);
+
+char *__scanf_buffer;
+
+extern int _format_scan(const void *src, const char *fmt, va_list argp, virtual_getc vgetc, virtual_ungetc vungetc);
 
 static int __virtual_getc_con(void *sp, const void *obj)
 // get next chat from string obj, save point is ptr to string char ptr
