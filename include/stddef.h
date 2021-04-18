@@ -26,7 +26,7 @@ typedef uint64_t uintmax_t;
     #define NULL ((void*)0)
 #endif
 
-#ifdef _NOT_FUNC_POINT
+#ifdef _KOLIBRI_LIBC_OBJ
     #define _FUNC(func) func
     #define _GLOBAL_VAR(var) var
 #else
