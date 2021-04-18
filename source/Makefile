@@ -3,7 +3,7 @@ CC=kos32-gcc
 KPACK=kpack
 FASM=fasm 
 
-CFLAGS =  -c -nostdinc -I../include -DGNUC -D_NOT_FUNC_POINT -Os -fno-common -fno-builtin -fno-leading-underscore -fno-pie
+CFLAGS =  -c -nostdinc -I../include -DGNUC -D_KOLIBRI_LIBC_OBJ -Os -fno-common -fno-builtin -fno-leading-underscore -fno-pie
 
 SRC=libc.c
 LIB=../lib/libc.obj
