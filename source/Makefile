@@ -9,10 +9,13 @@ SRC=libc.c
 LIB=../lib/libc.obj
 
 all:
+	$(MAKE) -C ../linuxtools/src
+	../linuxtools/ExportGen symbols.txt exports/exports.c
 	$(FASM) crt/crt0.asm ../lib/crt0.o
 	$(CC) $(CFLAGS) $(SRC) -o $(LIB)
 	$(KPACK) $(LIB)
-
+	../linuxtools/LoaderGen symbols.txt ../loader
+	../linuxtools/LoaderBuild ../loader
 install:
 	cp -f ../lib/libc.obj ~/.kex/root/RD/1/LIB
 
