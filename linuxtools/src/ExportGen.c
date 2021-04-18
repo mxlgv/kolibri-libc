@@ -30,9 +30,11 @@ int main(int argc, char** argv) {
 	// Generate
 	char symbol[256];
 	while(fscanf(input, "%s", symbol) != EOF) {
-		char temp[256];
-		sprintf(temp, "{\"%s\", %s},\n", symbol, symbol);
-		strcat(buf, temp);
+		if(symbol[0]!='!'){
+			char temp[256];
+			sprintf(temp, "{\"%s\", %s},\n", symbol, symbol);
+			strcat(buf, temp);
+		}
 	}
 	strcat(buf, "NULL,\n};");
 	fclose(input);
