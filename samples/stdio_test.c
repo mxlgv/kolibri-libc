@@ -3,7 +3,7 @@
 #include <limits.h>
 
 char* test_string1 = "Hello world!";
-
+/*
 void my_panic(char* func_name){
     _ksys_debug_puts("Panic!\n");
     _ksys_exit();
@@ -11,15 +11,15 @@ void my_panic(char* func_name){
 
 int (*puts)(const char *str);
 int (*printf)(const char* format, ...);
-
+*/
 
 int main(int argc, char** argv){
-    ksys_coff_etable_t *libc = _ksys_load_coff("/sys/lib/libc.obj");
+/*    ksys_coff_etable_t *libc = _ksys_load_coff("/sys/lib/libc.obj");
     if(!libc){
         _ksys_debug_puts("Error! libc.obj not loaded!\n");
     }
     printf = _ksys_get_coff_func(libc, "printf", my_panic);
-    puts = _ksys_get_coff_func(libc, "puts", my_panic);
+    puts = _ksys_get_coff_func(libc, "puts", my_panic);*/
     printf("Hello world! = %s\n", test_string1);
     printf("345.358980 = %f\n", 345.35898);
     printf("345 = %d\n", (int)345.35898);

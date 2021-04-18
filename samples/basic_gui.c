@@ -21,30 +21,6 @@ enum BUTTONS
 #define FONT_H 14
 #define LINES 10
 
-int (*snprintf)(char* buffer, size_t count, const char* format, ...);
-char* (*strcpy)(char*  s1, const char* s2);
-int (*sprintf)(char* buffer, const char* format, ...);
-void (*debug_printf)(const char* format, ...);
-
-void panic(char* func_name){
-    _ksys_debug_puts("Panic! Func: ");
-    _ksys_debug_puts(func_name);
-    _ksys_debug_puts(" == NULL\n");
-    _ksys_exit();
-}
-
-void load_libc(){
-    ksys_coff_etable_t *libc = _ksys_load_coff("/sys/lib/libc.obj");
-    if(!libc){
-        _ksys_debug_puts("Error! libc.obj not loaded!\n");
-        _ksys_exit();
-    }
-    snprintf = _ksys_get_coff_func(libc, "snprintf", panic);
-    sprintf = _ksys_get_coff_func(libc, "sprintf", panic);
-    strcpy = _ksys_get_coff_func(libc, "strcpy", panic);
-    debug_printf = _ksys_get_coff_func(libc, "debug_printf", panic);
-}
-
 void draw_window()
 {
     int win_hight, win_width, i, pos_y = _ksys_get_skin_height() + 36;  // 60 == 24+36
@@ -83,7 +59,6 @@ void draw_window()
     
 int main()
 {
-    load_libc();
     int gui_event;
     uint32_t pressed_button = 0, mouse_button;
     ksys_pos_t mouse_pos;
