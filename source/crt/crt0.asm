@@ -201,25 +201,7 @@ load_library:
     mov eax, 0
     ret
     
-; ==== memmove and memcpy ======
-
-proc memcpy c, to:dword,from:dword,count:dword
-    push esi
-    push edi
-    mov ecx,[count]
-	test ecx,ecx
-	jz no_copy_block
-        mov esi,[from]
-		mov edi,[to]
-		cld
-		rep movsb
-no_copy_block:
-
-    pop edi
-    pop esi
-    mov eax, [to]
-	ret
-endp
+; ==== memmove for tcc ======
 
 proc memmove c, to:dword,from:dword,count:dword
 
@@ -257,7 +239,6 @@ lib_init_str db 'lib_init', 0
 public argc as '__argc'
 public params as '__argv'
 public path as '__path'
-public memcpy
 public memmove
 
 section '.bss' 
