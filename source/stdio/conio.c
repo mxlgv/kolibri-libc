@@ -6,16 +6,16 @@ static char* __con_dllname = "/sys/lib/console.obj";
 
 int __con_is_load = 0;
 
-unsigned *__con_dll_ver=NULL;
-void stdcall (*__con_init_hidden)(int wnd_width, int wnd_height,int scr_width, int scr_height, const char* title)=NULL;
-void stdcall (*__con_write_asciiz)(const char* str)=NULL;
-void stdcall (*__con_write_string)(const char* str, unsigned length)=NULL;
-int stdcall (*__con_getch)(void)=NULL;
-short stdcall (*__con_getch2)(void)=NULL;
-int stdcall (*__con_kbhit)(void)=NULL;
-char* stdcall (*__con_gets)(char* str, int n)=NULL;
-char* stdcall (*__con_gets2)(__con_gets2_callback callback, char* str, int n)=NULL;
-void stdcall (*__con_exit)(int status)=NULL;
+void stdcall (*__con_init_hidden)(int wnd_width, int wnd_height,int scr_width, int scr_height, const char* title);
+void stdcall (*__con_write_asciiz)(const char* str);
+void stdcall (*__con_write_string)(const char* str, unsigned length);
+int stdcall (*__con_getch)(void);
+short stdcall (*__con_getch2)(void);
+int stdcall (*__con_kbhit)(void);
+char* stdcall (*__con_gets)(char* str, int n);
+char* stdcall (*__con_gets2)(__con_gets2_callback callback, char* str, int n);
+void stdcall (*__con_exit)(int status);
+void stdcall (*__con_set_title)(const char* title);
 
 static void __con_panic(char* func_name)
 {
@@ -36,6 +36,7 @@ static void __con_lib_link(ksys_coff_etable_t *exp)
     __con_gets          = _ksys_get_coff_func(exp, "con_gets", __con_panic);
     __con_gets2         = _ksys_get_coff_func(exp, "con_gets2", __con_panic);
     __con_exit          = _ksys_get_coff_func(exp, "con_exit", __con_panic);
+    __con_set_title     = _ksys_get_coff_func(exp, "con_set_title", __con_panic);
 }
 
 
@@ -44,6 +45,10 @@ int __con_init(void)
     return __con_init_opt(-1, -1, -1, -1, __con_caption); 
 }
 
+void con_set_title(const char* title){
+    __con_init();
+    __con_set_title(title);
+}
 
 int __con_init_opt(int wnd_width, int wnd_height,int scr_width, int scr_height, const char* title)
 {   

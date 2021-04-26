@@ -50,6 +50,8 @@
 #include "stdio/ftell.c"
 #include "stdio/tmpnam.c"
 #include "stdio/rewind.c"
+#include "stdio/vfprintf.c"
+#include "stdio/fprintf.c"
 
 #include "string/strerror.c"
 #include "string/strxfrm.c"
@@ -75,6 +77,7 @@
 #include "string/strcmp.c"
 #include "string/memset.c"
 #include "string/memcpy.c"
+#include "string/memmove.c"
 
 #include "stdlib/calloc.c"
 #include "stdlib/lldiv.c"

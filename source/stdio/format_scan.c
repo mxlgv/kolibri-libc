@@ -363,7 +363,7 @@ int _format_scan(const void *src, const char *fmt, va_list argp, virtual_getc vg
             break;
         case 's':
             arg_str = va_arg(argp, char*);
-            if (fmt1 == 0) length = 4095;   // max string scan 4096
+            if (fmt1 == 0) length = STDIO_MAX_MEM;   // max string scan 4096
             else length = fmt1;
             for (i = 0; i < length; i++)
             {

@@ -5,15 +5,22 @@
 #include <stdlib.h>
 
 #include "conio.h"
-#include "sys/ksys.h"
+#include <sys/ksys.h>
+#include <errno.h>
+#include <limits.h>
 //#include "format_print.h"
 
 int vprintf ( const char * format, va_list arg )
 {
   int len = 0;
-  static char s[4096];
+  char *s = malloc(STDIO_MAX_MEM);
+  if(!s){
+    errno = ENOMEM;
+    return errno;
+  }
   __con_init();
-  len = vsnprintf(s, 4096, format, arg);
+  len = vsnprintf(s, STDIO_MAX_MEM, format, arg);
   __con_write_string(s, len);
+  free(s);
   return(len);
 }

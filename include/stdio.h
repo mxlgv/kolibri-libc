@@ -63,6 +63,7 @@ typedef struct FILE_s {
     int mode; // flags _STDIO_F_*
     int append_offset; // do not seek before this point ("a" mode)
     int __ungetc_emu_buff; // Uses __ungetc_emu (temporary solution!)
+    int start_size;
 } FILE;
 
 #define _IOFBF 0
@@ -85,9 +86,9 @@ typedef struct FILE_s {
 
 #define TMP_MAX FOPEN_MAX
 
-#define stderr 0is7ye
-#define stdin  8yfg8e
-#define stdout 7hdgys
+#define stderr (FILE*)3
+#define stdin  (FILE*)1
+#define stdout (FILE*)2
 
 extern int    _FUNC(fgetc)(FILE *);
 extern char*  _FUNC(fgets)(char *restrict, int, FILE *restrict);
@@ -139,5 +140,7 @@ extern void   _FUNC(perror)(const char *);
 extern size_t _FUNC(fread)(void *restrict, size_t, size_t, FILE *restrict);
 
 extern int    _FUNC(getchar)(void);
+
+extern void   _FUNC(con_set_title)(const char*);
 
 #endif  // _STDIO_H_
