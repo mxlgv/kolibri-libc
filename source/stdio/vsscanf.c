@@ -1,4 +1,4 @@
-#include "format_scan.h"
+//#include "format_scan.h"
 
 static int __virtual_getc_str(void *sp, const void *obj)
 // get next chat from string obj, save point is ptr to string char ptr

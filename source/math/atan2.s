@@ -1,5 +1,4 @@
 /* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
-#include "libc/asm.h"
 
 .data
 	.align	2
@@ -11,7 +10,10 @@ nan:
 	.byte	0x7f
 
 .text
-MK_C_SYM(atan2)
+
+.global atan2;
+
+atan2:
 	fldl	4(%esp)
 	fldl	12(%esp)
 	ftst
@@ -28,7 +30,7 @@ doit:
 	fpatan
 	ret
 isanan:
-	movl	$1,C_SYM(errno)
+	movl	$1, errno
 	fstp	%st(0)
 	fstp	%st(0)
 	fldl	nan

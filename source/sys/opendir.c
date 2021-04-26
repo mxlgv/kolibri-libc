@@ -1,7 +1,7 @@
 /* Copyright (C) 2021 Logaev Maxim (turbocat2001), GPLv2 */
 
 #include <sys/dirent.h>
-#include <ksys.h>
+#include <sys/ksys.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>

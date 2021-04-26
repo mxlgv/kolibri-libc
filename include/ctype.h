@@ -18,7 +18,11 @@
 #define __UPPER   512
 #define __XDIGIT 1024
 
+#ifdef _KOLIBRI_LIBC_OBJ 
 extern unsigned short __is[129];
+#else
+extern unsigned short *__is;
+#endif
 
 #define isalnum(c)(__is[c+1] & __ALNUM ) /* 'a'-'z', 'A'-'Z', '0'-'9' */
 #define isalpha(c)(__is[c+1] & __ALPHA ) /* 'a'-'z', 'A'-'Z' */

@@ -1,15 +1,17 @@
-#include "libc/asm.h"
-L0:
+cos.L0:
 	.quad	0xffffffffffffffff
 
-MK_C_SYM(cos)
+.global cos;
+
+cos:
 	fldl	4(%esp)
 	fcos
 	fstsw
 	sahf
-	jnp	L1
+	jnp	cos.L1
 	fstp	%st(0)
-	fldl	L0
-L1:
+	fldl	cos.L0
+
+cos.L1:
 	ret
 

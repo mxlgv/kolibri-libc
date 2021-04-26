@@ -5,7 +5,7 @@
 */
 
 #include <string.h>
-#include <ksys.h>
+#include <sys/ksys.h>
 
 int strcmp(const char * s1, const char * s2)
 {

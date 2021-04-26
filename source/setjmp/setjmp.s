@@ -1,11 +1,6 @@
-.global ___setjmp
-.global __setjmp
-.global _setjmp
+
 .global setjmp
 
-___setjmp:
-__setjmp:
-_setjmp:
 setjmp:
 	mov 4(%esp), %eax
 	mov    %ebx, (%eax)

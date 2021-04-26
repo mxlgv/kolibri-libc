@@ -1,27 +1,28 @@
 /* Copyright (C) 1994 DJ Delorie, see COPYING.DJ for details */
-#include "libc/asm.h"
 	.data
 yint: 
 	.word   0,0
-LCW1:
+pow.LCW1:
 	.word	0
-LCW2:
+pow.LCW2:
 	.word	0
 
 	.text
-LC0:
+pow.LC0:
 	.double	0d1.0e+00
 
+.global pow;
+
 frac:
-	fstcw	LCW1
-	fstcw	LCW2
+	fstcw	pow.LCW1
+	fstcw	pow.LCW2
 	fwait
-	andw	$0xf3ff,LCW2
-	orw	$0x0400,LCW2
-	fldcw	LCW2
+	andw	$0xf3ff,pow.LCW2
+	orw	$0x0400,pow.LCW2
+	fldcw	pow.LCW2
 	fldl	%st(0)
 	frndint
-	fldcw	LCW1
+	fldcw	pow.LCW1
 	fxch	%st(1)
 	fsub	%st(1),%st
 	ret
@@ -29,12 +30,12 @@ frac:
 Lpow2:
 	call    frac
 	f2xm1
-	faddl	LC0
+	faddl	pow.LC0
 	fscale
 	fstp	%st(1)
 	ret
 
-MK_C_SYM(pow)
+pow:
 	fldl	12(%esp)
 	fldl	4(%esp)
 	ftst	

@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-extern int _GLOBAL_VAR(errno);
+extern int errno;
 
 #define EPERM 1 /* Operation not permitted */
 #define ENOENT 2 /* No such file or directory */

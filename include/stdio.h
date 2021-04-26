@@ -34,7 +34,7 @@
 
 #include <stdarg.h>
 #include <stddef.h>
-#include <ksys.h>
+#include <sys/ksys.h>
 
 extern int  _FUNC(puts)(const char *str);
 extern int  _FUNC(printf)(const char* format, ...);
@@ -98,6 +98,7 @@ extern size_t _FUNC(fread)(void *restrict, size_t size, size_t count, FILE *rest
 extern int    _FUNC(fscanf)(FILE *restrict, const char *restrict, ...);
 extern size_t _FUNC(fwrite)(const void *restrict, size_t size, size_t count, FILE *restrict);
 extern int    _FUNC(getc)(FILE *);
+#define       getc _FUNC(fgetc)
 extern int    _FUNC(getchar)(void);
 extern int    _FUNC(printf)(const char *restrict, ...);
 extern int    _FUNC(putc)(int, FILE *);

@@ -5,9 +5,9 @@ public start as '_start'
 ;extrn mf_init
 extrn main
 ;include 'debug2.inc'
-include 'inc/proc32.inc'
-include 'inc/macros.inc'
-include 'inc/dll.inc'
+include 'proc32.inc'
+include 'macros.inc'
+include 'dll.inc'
 __DEBUG__=0
 
 ;start_:
@@ -200,6 +200,38 @@ load_library:
 .fail:
     mov eax, 0
     ret
+    
+; ==== memmove for tcc ======
+
+proc memmove c, to:dword,from:dword,count:dword
+
+    push esi
+    push edi
+	mov ecx,[count]
+	test ecx,ecx
+	jz no_copy_block_
+		mov esi,[from]
+		mov edi,[to]
+		cmp esi, edi
+		je no_copy_block_
+		jg copy_
+            add	esi, ecx
+            add	edi, ecx
+            dec	esi
+            dec	edi
+            std
+copy_:
+		rep movsb
+        cld
+no_copy_block_:
+
+    pop edi
+    pop esi
+    mov eax,[to]
+	ret
+endp
+    
+    
 ;==============================
 
 lib_init_str db 'lib_init', 0
@@ -207,6 +239,7 @@ lib_init_str db 'lib_init', 0
 public argc as '__argc'
 public params as '__argv'
 public path as '__path'
+public memmove
 
 section '.bss' 
 buf_len = 0x400

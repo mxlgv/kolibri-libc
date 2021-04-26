@@ -1,6 +1,8 @@
 /* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
-#include "libc/asm.h"
-MK_C_SYM(floor)
+
+.global floor;
+
+floor:
 	pushl	%ebp
 	movl	%esp,%ebp
 	subl	$8,%esp        

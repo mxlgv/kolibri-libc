@@ -1,7 +1,7 @@
 #ifndef _TIME_H_
 #define _TIME_H_
 
-#include <ksys.h>
+#include <sys/ksys.h>
 
 typedef unsigned long int clock_t;
 typedef unsigned long int time_t;

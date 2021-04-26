@@ -8,7 +8,21 @@ extern "C" {
 #include <stddef.h>
 
 #define asm_inline __asm__ __volatile__
-#define not_optimized __attribute__((optimize("O0")))
+
+#define KSYS_FS_ERR_SUCCESS 0  // Success
+#define KSYS_FS_ERR_1       1  // Base and/or partition of a hard disk is not defined (fn21.7 & fn21.8)
+#define KSYS_FS_ERR_2       2  // Function is not supported for the given file system
+#define KSYS_FS_ERR_3       3  // Unknown file system
+#define KSYS_FS_ERR_4       4  // Reserved, is never returned in the current implementation
+#define KSYS_FS_ERR_5       5  // File not found
+#define KSYS_FS_ERR_EOF     6  // End of file, EOF
+#define KSYS_FS_ERR_7       7  // Pointer lies outside of application memory
+#define KSYS_FS_ERR_8       8  // Disk is full
+#define KSYS_FS_ERR_9       9  // FAT table is destroyed
+#define KSYS_FS_ERR_10      10 // Access denied
+#define KSYS_FS_ERR_11      11 // Device error
+
+typedef void ksys_panic(char *func_name);
 
 typedef struct {
     unsigned char blue;
@@ -48,7 +62,7 @@ typedef struct{
     size_t size;
 }ksys_ufile_t;
 
- 
+
 typedef struct{
     unsigned            p00;
     union{
@@ -171,15 +185,24 @@ enum KSYS_CLIP_TYPES{
     KSYS_CLIP_RAW = 2
 };
 
+enum KSYS_MOUSE_POS{
+    KSYS_MOUSE_SCREEN_POS = 0,
+    KSYS_MOUSE_WINDOW_POS = 1
+};
+
+enum KSYS_SHM_MODE{
+    KSYS_SHM_OPEN = 0x00,
+    KSYS_SHM_OPEN_ALWAYS = 0x04,
+    KSYS_SHM_CREATE = 0x08,
+    KSYS_SHM_READ = 0x00,
+    KSYS_SHM_WRITE = 0x01,
+};
+
 static inline 
 int _ksys_strcmp(const char * s1, const char * s2 )
 {
-    while ((*s1) && (*s1 == *s2)){
-        ++s1;
-        ++s2;
-    }
-
-    return ( *( unsigned char * )s1 - * ( unsigned char * )s2 );
+    while ((*s1) && (*s1 == *s2)){ ++s1; ++s2; }
+    return(*(unsigned char*)s1 - *(unsigned char *)s2);
 }
 
 // Functions for working with the graphical interface
@@ -206,7 +229,8 @@ void _ksys_create_window(int x, int y, int w, int h, const char *name, ksys_colo
         "c"((y << 16) | ((h-1) & 0xFFFF)),
         "d"((style << 24) | (workcolor & 0xFFFFFF)),
         "D"(name),
-        "S"(0) : "memory"
+        "S"(0) 
+        :"memory"
      );
 };
 
@@ -262,6 +286,7 @@ void _ksys_draw_bitmap(void *bitmap, int x, int y, int w, int h)
         ::"a"(7), "b"(bitmap),
         "c"((w << 16) | h),
         "d"((x << 16) | y)
+        :"memory"
     );
 }
 
@@ -330,20 +355,37 @@ void _ksys_get_colors(ksys_colors_table_t *color_table)
     );
 }
 
+/* Functions for working with a screen. */
+
+static inline
+ksys_pos_t _ksys_screen_size()
+{
+	ksys_pos_t size;
+    ksys_pos_t size_tmp;
+    asm_inline(
+        "int $0x40"
+        :"=a"(size_tmp)
+        :"a"(14)
+    );
+    size.x = size_tmp.y;
+    size.y = size_tmp.x; 
+    return size;
+}
+
 
 /* Functions for working with a mouse and cursors. */
 
 static inline
 ksys_pos_t _ksys_get_mouse_pos(int origin)
 {
-    ksys_pos_t val;
+    ksys_pos_t pos;
     asm_inline(
         "int $0x40 \n\t"
         "rol $16, %%eax"
-        :"=a"(val)
+        :"=a"(pos)
         :"a"(37),"b"(origin)
     );
-    return val;
+    return pos;
 }
  
 static inline
@@ -378,6 +420,7 @@ unsigned _ksys_load_cursor(void *path, unsigned flags)
         "int $0x40"
         :"=a"(val)
         :"a"(37), "b"(4), "c"(path), "d"(flags)
+        :"memory"
     );
     return val;
 }
@@ -528,6 +571,7 @@ int _ksys_clip_set(int n, char *buffer)
         "int $0x40"
         :"=a"(val)
         :"a"(54), "b"(2), "c"(n), "d"(buffer)
+        :"memory"
     );
     return val;
 }
@@ -664,19 +708,20 @@ int* _ksys_unmap(void *base, size_t offset, size_t size)
 /* Loading the dynamic coff library */
 
 static inline
-ksys_coff_etable_t* not_optimized _ksys_cofflib_load(const char* path)
+ksys_coff_etable_t* _ksys_load_coff(const char* path)
 {
     ksys_coff_etable_t *table;
     asm_inline(
         "int $0x40"
         :"=a"(table)
         :"a"(68),"b"(19), "c"(path)
+        :"memory"
     );
     return table;
 }
 
 static inline
-void* not_optimized _ksys_cofflib_getproc(ksys_coff_etable_t *table, const char* fun_name)
+void* _ksys_get_coff_func(ksys_coff_etable_t *table, const char* fun_name, ksys_panic* panic)
 {
     unsigned i=0;
     while (1){
@@ -689,6 +734,7 @@ void* not_optimized _ksys_cofflib_getproc(ksys_coff_etable_t *table, const char*
         }
         i++;
     }
+    panic((char*)fun_name);
     return NULL;
 }
 
@@ -746,13 +792,14 @@ int _ksys_get_thread_slot(int tid){
 }
 
 static inline 
-int not_optimized _ksys_process_info(ksys_proc_table_t* table, int pid)
+int _ksys_process_info(ksys_proc_table_t* table, int pid)
 {
     int val;
     asm_inline(
         "int $0x40"
         :"=a"(val)
         :"a"(9), "b"(table), "c"(pid)
+        :"memory"
     );
     return val;
 }
@@ -792,6 +839,7 @@ ksys_ufile_t _ksys_load_file(const char *path)
         "int $0x40"
         :"=a"(uf.data), "=d"(uf.size)
         :"a"(68), "b"(27),"c"(path)
+        :"memory"
     );
     return uf;
 }
@@ -804,24 +852,26 @@ ksys_ufile_t _ksys_load_file_enc(const char *path, unsigned file_encoding)
         "int $0x40"
         :"=a"(uf.data), "=d"(uf.size)
         :"a"(68), "b"(28),"c"(path), "d"(file_encoding)
+        :"memory"
     );
     return uf;
 }
 
 static inline
-int not_optimized _ksys_work_files(const ksys70_t *k)
+int _ksys_work_files(const ksys70_t *k)
 {
     int status;
     asm_inline(
         "int $0x40"
         :"=a"(status)
         :"a"(70), "b"(k)
+        :"memory"
     );
     return status;
 }
 
 static inline
-int not_optimized _ksys_file_read_file(const char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_read)
+int _ksys_file_read_file(const char *name, unsigned long long offset, unsigned size, void *buf, unsigned *bytes_read)
 {
     ksys70_t k;
     k.p00 = 0;
@@ -832,11 +882,7 @@ int not_optimized _ksys_file_read_file(const char *name, unsigned long long offs
     k.p21 = name;
     int status;
     unsigned bytes_read_v;
-    asm_inline(
-        "int $0x40"
-        :"=a"(status), "=b"(bytes_read_v)
-        :"a"(70), "b"(&k)
-    );
+    _ksys_work_files(&k);
     if (!status) {
         *bytes_read = bytes_read_v;
     }
@@ -844,7 +890,7 @@ int not_optimized _ksys_file_read_file(const char *name, unsigned long long offs
 }
 
 static inline
-int not_optimized _ksys_file_write_file(const char *name, unsigned long long offset, unsigned size, const void *buf, unsigned *bytes_written)
+int _ksys_file_write_file(const char *name, unsigned long long offset, unsigned size, const void *buf, unsigned *bytes_written)
 {
     ksys70_t k;
     k.p00 = 3;
@@ -859,6 +905,7 @@ int not_optimized _ksys_file_write_file(const char *name, unsigned long long off
         "int $0x40"
         :"=a"(status), "=b"(bytes_written_v)
         :"a"(70), "b"(&k)
+        :"memory"
     );
     if (!status) {
         *bytes_written = bytes_written_v;
@@ -867,7 +914,7 @@ int not_optimized _ksys_file_write_file(const char *name, unsigned long long off
 }
 
 static inline
-int not_optimized _ksys_file_get_info(const char *name, ksys_bdfe_t *bdfe)
+int _ksys_file_get_info(const char *name, ksys_bdfe_t *bdfe)
 {
     ksys70_t k;
     k.p00 = 5;
@@ -878,7 +925,7 @@ int not_optimized _ksys_file_get_info(const char *name, ksys_bdfe_t *bdfe)
 }
 
 static inline
-int not_optimized _ksys_file_delete(const char *name)
+int _ksys_file_delete(const char *name)
 {
     ksys70_t k;
     k.p00 = 8;
@@ -888,7 +935,7 @@ int not_optimized _ksys_file_delete(const char *name)
 }
 
 static inline
-int not_optimized _ksys_file_rename(const char *name, const char *new_name)
+int _ksys_file_rename(const char *name, const char *new_name)
 {
     ksys70_t k;
     k.p00 = 10;
@@ -900,19 +947,51 @@ int not_optimized _ksys_file_rename(const char *name, const char *new_name)
 
 
 static inline
-int not_optimized _ksys_exec(char *app_name, char *args){
-    ksys70_t file_op;
-    file_op.p00 = 7;
-    file_op.p04dw = 0;
-    file_op.p08dw = (unsigned)args;
-    file_op.p21 = app_name;
-    register int val;
+int _ksys_exec(char *app_name, char *args)
+{
+    ksys70_t file_opt;
+    file_opt.p00 = 7;
+    file_opt.p04dw = 0;
+    file_opt.p08dw = (unsigned)args;
+    file_opt.p21 = app_name;
+    return _ksys_work_files(&file_opt);
+}
+
+static inline
+int _ksys_mkdir(const char *path)
+{
+    ksys70_t dir_opt;
+    dir_opt.p00 = 9;
+    dir_opt.p21 = path;
+    return _ksys_work_files(&dir_opt);
+}
+
+/* Working with a named shared memory area. */
+
+static inline
+int _ksys_shm_open(char *name, int mode, int size, char **new_shm)
+{
+    int error;
     asm_inline(
         "int $0x40"
-        :"=a"(val)
-        :"a"(70), "b"(&file_op)
+        :"=a"(*new_shm), "=d"(error)
+        :"a"(68), "b"(22), "c"(name), "d"(size), "S"(mode)
     );
-    return val;
+    return error;
 }
+
+ 
+static inline
+void _ksys_shm_close(char *shm_name)
+{
+    asm_inline(
+        "int $0x40":
+        :"a"(68), "b"(23), "c"(shm_name)
+    );
+}
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _KSYS_H_

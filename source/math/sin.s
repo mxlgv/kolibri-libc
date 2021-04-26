@@ -1,16 +1,18 @@
 /* Copyright (C) 1994 DJ Delorie, see COPYING.DJ for details */
-#include "libc/asm.h"
-L0:
+
+.global sin;
+
+sin.L0:
 	.quad	0xffffffffffffffff
 
-MK_C_SYM(sin)
+sin:
 	fldl	4(%esp)
 	fsin
 	fstsw
 	sahf
-	jnp	L1
+	jnp	sin.L1
 	fstp	%st(0)
 	fldl	L0
-L1:
+sin.L1:
 	ret	
 
