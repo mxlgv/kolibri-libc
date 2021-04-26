@@ -14,7 +14,7 @@ string_test.kex
 all: $(BIN)
 	
 %.kex : %.c
-	$(KTCC) $(CFLAGS) $(LDFLAGS) $< -o $@ -lc.obj
+	$(KTCC) $(CFLAGS) $(LDFLAGS) $< -o $@ -lnetwork -lc.obj
 	$(KPACK) --nologo $@
 
 clean:
