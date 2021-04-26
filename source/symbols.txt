@@ -9,6 +9,7 @@ fgetc
 fgetpos
 fgets
 fopen
+fprintf
 fputc
 fputs
 fread
@@ -121,7 +122,7 @@ pow10
 !____LONGJMP____
 longjmp
 setjmp
-!___CTYPE____
+!____CTYPE____
 __is
-!____GLOBAL_VARS____
-errno
+!___CONIO___
+con_set_title
