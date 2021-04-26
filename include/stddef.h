@@ -28,10 +28,8 @@ typedef uint64_t uintmax_t;
 
 #ifdef _KOLIBRI_LIBC_OBJ
     #define _FUNC(func) func
-    #define _GLOBAL_VAR(var) var
 #else
     #define _FUNC(func) (*func)
-    #define _GLOBAL_VAR(var) *var
 #endif
 
 #define offsetof(type, field) ((size_t)&((type *)0)->field)
