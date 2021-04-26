@@ -5,4 +5,4 @@ lib/crt0.o
 *.o
 tests/argtest
 source/make.bat
-/samples/http_tcp_demo.kex
+/samples/*.kex
