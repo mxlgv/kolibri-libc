@@ -13,10 +13,9 @@ int main(int argc, char** argv) {
 	if ((input = fopen(argv[1], "r")) == NULL)
 	{
 		printf("error: file \"%s\" not found\n", argv[1]);
-		return 0;
+		return 1;
 	}
 	char buf[10000];
-	
 	// Head
 	strcpy(buf, \
 			"#include <stdio.h>\n" \
@@ -43,6 +42,12 @@ int main(int argc, char** argv) {
 	
 	// Output generated
 	output = fopen(argv[2], "w");
+	if (output == NULL)
+	{
+		printf("Unable to write to file: '%s'!\n", argv[2]);
+		return 1;
+	}
+
 	fputs(buf, output);
 	fclose(output);
 	
