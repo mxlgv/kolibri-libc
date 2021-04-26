@@ -1,4 +1,19 @@
-- name: Set up MinGW
-  uses: egor-tensin/setup-mingw@v2
-  with:
-    platform: x64
+
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main, feat/stdio-fs ]
+  pull_request:
+    branches: [ main, feat/stdio-fs ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: chmod u+x $PWD/linuxtools/fasm && export PATH=$PATH:$PWD/linuxtools && cd source && make
+   
