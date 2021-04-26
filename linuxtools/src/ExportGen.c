@@ -25,6 +25,8 @@ int main(int argc, char** argv) {
 			"#include <time.h>\n" \
 			"#include <sys/dirent.h>\n" \
 			"#include <sys/ksys.h>\n\n" \
+			"#include <math.h>\n\n" \
+			"#include <setjmp.h>\n\n" \
 			"ksys_coff_etable_t EXPORTS[] = {\n");
 	
 	// Generate
@@ -32,7 +34,7 @@ int main(int argc, char** argv) {
 	while(fscanf(input, "%s", symbol) != EOF) {
 		if(symbol[0]!='!'){
 			char temp[256];
-			sprintf(temp, "{\"%s\", %s},\n", symbol, symbol);
+			sprintf(temp, "{\"%s\", &%s},\n", symbol, symbol);
 			strcat(buf, temp);
 		}
 	}
