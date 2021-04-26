@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: chmod u+x $PWD/linuxtools/fasm && export PATH=$PATH:$PWD/linuxtools && cd source && env GCC=i686-w64-mingw32-gcc make
+      - name: Set up MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x86
