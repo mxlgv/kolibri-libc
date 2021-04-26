@@ -1,10 +1,12 @@
 #include "ctype/is.c"
+
 #include "sys/rewinddir.c"
 #include "sys/readdir.c"
 #include "sys/seekdir.c"
 #include "sys/opendir.c"
 #include "sys/telldir.c"
 #include "sys/closedir.c"
+
 #include "stdio/clearerr.c"
 #include "stdio/vscanf.c"
 #include "stdio/gets.c"
@@ -48,6 +50,7 @@
 #include "stdio/ftell.c"
 #include "stdio/tmpnam.c"
 #include "stdio/rewind.c"
+
 #include "string/strerror.c"
 #include "string/strxfrm.c"
 #include "string/strrchr.c"
@@ -71,6 +74,8 @@
 #include "string/strtok.c"
 #include "string/strcmp.c"
 #include "string/memset.c"
+#include "string/memcpy.c"
+
 #include "stdlib/calloc.c"
 #include "stdlib/lldiv.c"
 #include "stdlib/malloc.c"
@@ -92,6 +97,41 @@
 #include "stdlib/itoa.c"
 #include "stdlib/time.c"
 #include "stdlib/strtol.c"
+
+#include "math/acosh.c"
+#include "math/asinh.c"
+#include "math/atanh.c"
+#include "math/cosh.c"
+#include "math/frexp.c"
+#include "math/hypot.c"
+#include "math/ldexp.c"
+#include "math/sinh.c"
+#include "math/tanh.c"
+
+
+__asm__(
+    ".include \"math/acos.s\"\n\t"
+    ".include \"math/asin.s\"\n\t"
+    ".include \"math/atan.s\"\n\t"
+    ".include \"math/atan2.s\"\n\t"
+    ".include \"math/ceil.s\"\n\t"
+    ".include \"math/cos.s\"\n\t"
+    ".include \"math/exp.s\"\n\t"
+    ".include \"math/fabs.s\"\n\t"
+    ".include \"math/floor.s\"\n\t"
+    ".include \"math/fmod.s\"\n\t"
+    ".include \"math/log.s\"\n\t"
+    ".include \"math/modf.s\"\n\t"
+    ".include \"math/modfl.s\"\n\t"
+    ".include \"math/pow.s\"\n\t"
+    ".include \"math/pow2.s\"\n\t"
+    ".include \"math/pow10.s\"\n\t"   
+);
+
+__asm__(
+    ".include \"setjmp/longjmp.s\"\n\t"
+    ".include \"setjmp/setjmp.s\""
+);
 
 #include "stdlib/___chkstk_ms.c"
 
