@@ -4,6 +4,7 @@
    Permission is granted to use, modify, and / or redistribute at will.
 */
 
+#include <errno.h>
 #include <string.h>
 #include <sys/ksys.h>
 
