@@ -14,5 +14,8 @@
 #define PATH_MAX        4096
 #endif
 
+#ifndef STDIO_MAX_MEM
+#define STDIO_MAX_MEM 4096
+#endif
 
 #endif /* _LIMITS_H_ */
