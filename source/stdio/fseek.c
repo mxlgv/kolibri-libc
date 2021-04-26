@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <ksys.h>
+#include <sys/ksys.h>
 
 int fseek(FILE *stream, long int offset, int whence) {
 	if (whence == SEEK_SET) {

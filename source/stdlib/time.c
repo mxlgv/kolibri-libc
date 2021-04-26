@@ -1,5 +1,5 @@
 #include <time.h>
-#include <ksys.h>
+#include <sys/ksys.h>
 
 time_t time (time_t* timer)
 {

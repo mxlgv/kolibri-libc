@@ -133,7 +133,7 @@ static int __try_parse_real(long double *real, int ch, const void *src, void *sa
         }
     }
     div *= sign;
-    *real *= pow(10, div);
+    *real *= pow(10,div);
 
     return 1;
 }

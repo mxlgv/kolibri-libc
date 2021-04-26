@@ -1,10 +1,11 @@
-#include "libc/asm.h"
+.text
 
-	.text
-LC0:
+acos.LC0:
 	.double 0d1.00000000000000000000e+00
 
-MK_C_SYM(acos)
+.global acos;
+
+acos:
 	fldl	4(%esp)
 	fld1
 	fsubp	%st(0),%st(1)

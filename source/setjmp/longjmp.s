@@ -1,7 +1,5 @@
-.global _longjmp
 .global longjmp
 
-_longjmp:
 longjmp:
 	mov  4(%esp),%edx
 	mov  8(%esp),%eax

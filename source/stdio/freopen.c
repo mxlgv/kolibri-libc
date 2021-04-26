@@ -1,12 +1,10 @@
+#include "sys/ksys.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 FILE *freopen(const char *restrict _name, const char *restrict _mode, FILE *restrict out) {
-    ksys_bdfe_t info;
-    if (_ksys_file_get_info(_name, &info)) {
-        return NULL;
-    }
+    static ksys_bdfe_t info;
 
     if (!out) {
         return NULL;
@@ -31,6 +29,12 @@ FILE *freopen(const char *restrict _name, const char *restrict _mode, FILE *rest
         out->position = info.size;
         out->append_offset = info.size;
     }
-
+    /*if(out->mode != _STDIO_F_W){
+        if (_ksys_file_get_info(_name, &info)) {
+            _ksys_debug_puts("freeopen error\n");
+            return NULL;
+        }
+    }
+*/
     return out;
 }

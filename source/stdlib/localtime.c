@@ -1,5 +1,5 @@
 #include <time.h>
-#include <ksys.h>
+#include <sys/ksys.h>
 
 struct tm buffertime;
 

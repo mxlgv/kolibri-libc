@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include "format_scan.h"
+//#include "format_scan.h"
 #include <errno.h>
 
 // non standard realization - support for virtually change ONLY ONE char

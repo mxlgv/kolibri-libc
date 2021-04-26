@@ -1,4 +1,4 @@
-#include "format_scan.h"
+//#include "format_scan.h"
 #include <stdlib.h>
 
 int scanf ( const char * format, ...)
